@@ -1,11 +1,20 @@
 import React from 'react';
-import {Text, View} from 'react-native';
+import {NavigationContainer} from '@react-navigation/native';
+import {createDrawerNavigator} from '@react-navigation/drawer';
+import HomeScreen from './src/screens/HomeScreen';
+import AccountScreen from './src/screens/AccountScreen';
+import {setNavigator} from './src/helpers/navigationRef';
+
+const Drawer = createDrawerNavigator();
 
 const App = () => {
   return (
-    <View>
-      <Text>Project setup</Text>
-    </View>
+    <NavigationContainer ref={(navigator) => setNavigator(navigator)}>
+      <Drawer.Navigator initialRouteName="Home">
+        <Drawer.Screen name="Home" component={HomeScreen} />
+        <Drawer.Screen name="Account" component={AccountScreen} />
+      </Drawer.Navigator>
+    </NavigationContainer>
   );
 };
 
