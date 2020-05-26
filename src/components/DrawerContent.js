@@ -1,15 +1,15 @@
-import React, {useState} from 'react';
+import React, {useContext} from 'react';
 import {View, StyleSheet, Text} from 'react-native';
 import {DrawerContentScrollView, DrawerItem} from '@react-navigation/drawer';
 import Icon from 'react-native-vector-icons/Feather';
 import {Drawer, Avatar, Title, Caption, Switch, TouchableRipple} from 'react-native-paper';
 import {navigate} from '../helpers/navigationRef';
+import {Context as DrawContext} from '../context/DrawContext';
 
 const styles = StyleSheet.create({
   drawerWrapper: {
     flex: 1,
     padding: 10,
-    backgroundColor: '#fff',
   },
   drawerUserDetailsWrapper: {
     flexDirection: 'row',
@@ -25,14 +25,36 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 10,
   },
+  darkModeColor: {
+    color: '#fff',
+  },
+  lightModeColor: {
+    color: '#000',
+  },
+});
+const lightStyles = StyleSheet.create({
+  drawerWrapper: {
+    backgroundColor: '#fff',
+  },
+});
+const darkStyles = StyleSheet.create({
+  drawerWrapper: {
+    backgroundColor: '#000',
+  },
 });
 
 const DrawerContent = (props) => {
-  const [isEnable, setEnable] = useState(false);
+  const {
+    state: {isDarkMode},
+    handleDarkMode,
+  } = useContext(DrawContext);
 
-  const _onToggleSwitch = () => setEnable((prevState) => !prevState);
   return (
-    <View style={styles.drawerWrapper}>
+    <View
+      style={[
+        styles.drawerWrapper,
+        isDarkMode ? darkStyles.drawerWrapper : lightStyles.drawerWrapper,
+      ]}>
       <DrawerContentScrollView {...props}>
         <View>
           <View style={[styles.drawerUserDetailsWrapper]}>
@@ -43,36 +65,49 @@ const DrawerContent = (props) => {
               size={50}
             />
             <View style={styles.drawerUserInfoWrapper}>
-              <Title>Marta Matczanski</Title>
-              <Caption>Front-End Developer</Caption>
+              <Title style={isDarkMode && styles.darkModeColor}>Marta Matczanski</Title>
+              <Caption style={isDarkMode && styles.darkModeColor}>Front-End Developer</Caption>
             </View>
           </View>
         </View>
         <Drawer.Section title="General">
           <DrawerItem
-            icon={() => <Icon type="feather" name="home" size={24} />}
+            icon={() => (
+              <Icon type="feather" name="home" size={24} color={isDarkMode ? '#fff' : '#000'} />
+            )}
             label="Home"
             onPress={() => navigate('Home')}
+            labelStyle={isDarkMode && styles.darkModeColor}
           />
           <DrawerItem
-            icon={() => <Icon type="feather" name="user" size={24} />}
+            icon={() => (
+              <Icon type="feather" name="user" size={24} color={isDarkMode ? '#fff' : '#000'} />
+            )}
             label="Account"
             onPress={() => navigate('Account')}
+            labelStyle={isDarkMode && styles.darkModeColor}
           />
         </Drawer.Section>
         <Drawer.Section title="Preferences">
           <TouchableRipple>
             <View style={styles.darkModeListItem}>
-              <Text>Dark mode</Text>
-              <Switch value={isEnable} onValueChange={_onToggleSwitch} color="#1975d2" />
+              <Text style={isDarkMode && styles.darkModeColor}>Dark mode</Text>
+              <Switch
+                value={isDarkMode}
+                onValueChange={() => handleDarkMode(isDarkMode)}
+                color="#1975d2"
+              />
             </View>
           </TouchableRipple>
         </Drawer.Section>
       </DrawerContentScrollView>
       <DrawerItem
-        icon={() => <Icon type="feather" name="log-out" size={24} />}
+        icon={() => (
+          <Icon type="feather" name="log-out" size={24} color={isDarkMode ? '#fff' : '#000'} />
+        )}
         label="Log Out"
-        onPress={() => console.log('Log out')}
+        onPress={() => null}
+        labelStyle={isDarkMode && styles.darkModeColor}
       />
     </View>
   );
