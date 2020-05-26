@@ -12,7 +12,7 @@ const AccountScreen = ({navigation}) => {
 };
 
 AccountScreen.propTypes = {
-  navigation: PropTypes.func.isRequired,
+  navigation: PropTypes.object.isRequired,
 };
 
 export default AccountScreen;

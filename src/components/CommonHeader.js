@@ -2,6 +2,7 @@ import React from 'react';
 import {Header} from 'react-native-elements';
 import PropTypes from 'prop-types';
 import CommonNavButton from './CommonNavButton';
+import {navigate} from '../helpers/navigationRef';
 
 const CommonHeader = ({navigation, text}) => {
   return (
@@ -10,9 +11,11 @@ const CommonHeader = ({navigation, text}) => {
         <CommonNavButton icon="menu" handleNavigation={() => navigation.openDrawer()} />
       }
       centerComponent={{text, style: {color: '#fff'}}}
-      rightComponent={
-        <CommonNavButton icon="home" handleNavigation={() => navigation.navigate('Home')} />
-      }
+      rightComponent={<CommonNavButton icon="home" handleNavigation={() => navigate('Home')} />}
+      statusBarProps={{translucent: true}}
+      containerStyle={{
+        backgroundColor: '#004A9E',
+      }}
     />
   );
 };
@@ -20,7 +23,6 @@ const CommonHeader = ({navigation, text}) => {
 CommonHeader.propTypes = {
   text: PropTypes.string.isRequired,
   navigation: PropTypes.shape({
-    navigate: PropTypes.func.isRequired,
     openDrawer: PropTypes.func.isRequired,
   }).isRequired,
 };

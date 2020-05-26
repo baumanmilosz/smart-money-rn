@@ -3,14 +3,17 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import HomeScreen from './src/screens/HomeScreen';
 import AccountScreen from './src/screens/AccountScreen';
-import {setNavigator} from './src/helpers/navigationRef';
+import {navigationRef} from './src/helpers/navigationRef';
+import DrawerContent from './src/components/DrawerContent';
 
 const Drawer = createDrawerNavigator();
 
 const App = () => {
   return (
-    <NavigationContainer ref={(navigator) => setNavigator(navigator)}>
-      <Drawer.Navigator initialRouteName="Home">
+    <NavigationContainer ref={navigationRef}>
+      <Drawer.Navigator
+        initialRouteName="Home"
+        drawerContent={(props) => <DrawerContent {...props} />}>
         <Drawer.Screen name="Home" component={HomeScreen} />
         <Drawer.Screen name="Account" component={AccountScreen} />
       </Drawer.Navigator>
