@@ -1,13 +1,15 @@
 import React from 'react';
-import {View} from 'react-native';
+import {WebView} from 'react-native-webview';
 import PropTypes from 'prop-types';
 import CommonHeader from '../components/CommonHeader';
+import CommonView from '../components/CommonView';
 
 const HomeScreen = ({navigation}) => {
   return (
-    <View>
+    <CommonView>
       <CommonHeader text="Home" navigation={navigation} />
-    </View>
+      <WebView source={{uri: 'https://youtube.com/'}} />
+    </CommonView>
   );
 };
 

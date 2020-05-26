@@ -6,12 +6,17 @@ import {Drawer, Avatar, Title, Caption, Switch, TouchableRipple} from 'react-nat
 import {navigate} from '../helpers/navigationRef';
 
 const styles = StyleSheet.create({
-  drawerUserInfoSection: {
+  drawerWrapper: {
+    flex: 1,
+    padding: 10,
+    backgroundColor: '#fff',
+  },
+  drawerUserDetailsWrapper: {
     flexDirection: 'row',
     alignItems: 'center',
     marginBottom: 10,
   },
-  userNameWrapper: {
+  drawerUserInfoWrapper: {
     marginLeft: 10,
   },
   darkModeListItem: {
@@ -27,17 +32,17 @@ const DrawerContent = (props) => {
 
   const _onToggleSwitch = () => setEnable((prevState) => !prevState);
   return (
-    <View style={{flex: 1, padding: 10}}>
+    <View style={styles.drawerWrapper}>
       <DrawerContentScrollView {...props}>
-        <View style={styles.drawerContent}>
-          <View style={styles.drawerUserInfoSection}>
+        <View>
+          <View style={[styles.drawerUserDetailsWrapper]}>
             <Avatar.Image
               source={{
                 uri: 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
               }}
               size={50}
             />
-            <View style={styles.userNameWrapper}>
+            <View style={styles.drawerUserInfoWrapper}>
               <Title>Marta Matczanski</Title>
               <Caption>Front-End Developer</Caption>
             </View>
