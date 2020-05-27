@@ -1,7 +1,7 @@
 import DrawerActionTypes from '../constans/DrawerActionTypes';
 import createContext from './createContext';
 
-const drawReducer = (state, {type, payload}) => {
+const navigationReducer = (state, {type, payload}) => {
   switch (type) {
     case DrawerActionTypes.HANDLE_DARK_MODE:
       return {...state, isDarkMode: !payload};
@@ -15,7 +15,7 @@ const handleDarkMode = (dispatch) => {
 };
 
 export const {Provider, Context} = createContext(
-  drawReducer,
+  navigationReducer,
   {handleDarkMode},
   {isDarkMode: false}
 );

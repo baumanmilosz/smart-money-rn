@@ -4,7 +4,8 @@ import {DrawerContentScrollView, DrawerItem} from '@react-navigation/drawer';
 import Icon from 'react-native-vector-icons/Feather';
 import {Drawer, Avatar, Title, Caption, Switch, TouchableRipple} from 'react-native-paper';
 import {navigate} from '../helpers/navigationRef';
-import {Context as DrawContext} from '../context/DrawContext';
+import {Context as NavigationContext} from '../context/NavigationContext';
+import {Context as AuthContext} from '../context/AuthContext';
 
 const styles = StyleSheet.create({
   drawerWrapper: {
@@ -43,11 +44,12 @@ const darkStyles = StyleSheet.create({
   },
 });
 
-const DrawerContent = (props) => {
+const Navigation = (props) => {
+  const {signout} = useContext(AuthContext);
   const {
     state: {isDarkMode},
     handleDarkMode,
-  } = useContext(DrawContext);
+  } = useContext(NavigationContext);
 
   return (
     <View
@@ -106,11 +108,11 @@ const DrawerContent = (props) => {
           <Icon type="feather" name="log-out" size={24} color={isDarkMode ? '#fff' : '#000'} />
         )}
         label="Log Out"
-        onPress={() => null}
+        onPress={signout}
         labelStyle={isDarkMode && styles.darkModeColor}
       />
     </View>
   );
 };
 
-export default DrawerContent;
+export default Navigation;

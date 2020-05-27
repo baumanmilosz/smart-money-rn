@@ -11,10 +11,13 @@
     "precommit": "lint-staged"
   },
   "dependencies": {
+    "@react-native-community/async-storage": "^1.11.0",
     "@react-native-community/masked-view": "^0.1.10",
     "@react-navigation/drawer": "^5.8.0",
     "@react-navigation/native": "^5.4.3",
     "@react-navigation/stack": "^5.4.0",
+    "axios": "^0.19.2",
+    "ngrok": "^3.2.7",
     "prop-types": "^15.7.2",
     "react": "16.11.0",
     "react-native": "0.62.2",
