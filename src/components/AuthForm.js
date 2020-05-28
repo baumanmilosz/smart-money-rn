@@ -52,6 +52,8 @@ const AuthForm = ({onSubmit, authTitle, redirectRouteName, redirectLinkText}) =>
         theme={{colors: theme.colors}}
         value={email}
         onChangeText={setEmail}
+        autoCapitalize="none"
+        autoCorrect={false}
       />
       <TextInput
         label="Password"
@@ -60,6 +62,9 @@ const AuthForm = ({onSubmit, authTitle, redirectRouteName, redirectLinkText}) =>
         style={styles.authFormInput}
         value={password}
         onChangeText={setPassword}
+        autoCapitalize="none"
+        autoCorrect={false}
+        secureTextEntry
       />
       {errorMessage ? <Title style={styles.authFormErrorMessage}>{errorMessage}</Title> : null}
       <Button

@@ -6,18 +6,24 @@ import {navigate} from '../helpers/navigationRef';
 
 const authReducer = (state, {type, payload}) => {
   switch (type) {
+    case AuthActionTypes.SIGNUP:
+      return {...state, isLoading: true};
     case AuthActionTypes.SIGNUP_SUCCESS:
-      return {...state, errorMessage: '', token: payload};
+      return {...state, errorMessage: '', token: payload, isLoading: false};
     case AuthActionTypes.SIGNUP_FAILURE:
-      return {...state, errorMessage: payload, token: payload};
+      return {...state, errorMessage: payload, token: payload, isLoading: false};
+    case AuthActionTypes.SIGNIN:
+      return {...state, isLoading: true};
     case AuthActionTypes.SIGNIN_SUCCESS:
-      return {...state, errorMessage: '', token: payload};
+      return {...state, errorMessage: '', token: payload, isLoading: false};
     case AuthActionTypes.SIGNIN_FAILURE:
-      return {...state, errorMessage: payload, token: null};
+      return {...state, errorMessage: payload, token: null, isLoading: false};
+    case AuthActionTypes.SIGNOUT:
+      return {...state, isLoading: true};
     case AuthActionTypes.SIGNOUT_SUCCESS:
-      return {...state, token: null};
+      return {...state, token: null, isLoading: false};
     case AuthActionTypes.SIGNOUT_FAILURE:
-      return {...state, errorMessage: payload};
+      return {...state, errorMessage: payload, isLoading: false};
     default:
       return state;
   }
@@ -25,6 +31,7 @@ const authReducer = (state, {type, payload}) => {
 
 const signup = (dispatch) => {
   return async (email, password) => {
+    dispatch({type: AuthActionTypes.SIGNUP});
     try {
       const res = await apiClient.post('/signup', {email, password});
       const {token} = res.data;
@@ -42,6 +49,7 @@ const signup = (dispatch) => {
 
 const signin = (dispatch) => {
   return async (email, password) => {
+    dispatch({type: AuthActionTypes.SIGNIN});
     try {
       const res = await apiClient.post('/signin', {email, password});
       const {token} = res.data;
@@ -59,6 +67,7 @@ const signin = (dispatch) => {
 
 const signout = (dispatch) => {
   return async () => {
+    dispatch({type: AuthActionTypes.SIGNOUT});
     try {
       await AsyncStorage.removeItem('token');
       dispatch({type: AuthActionTypes.SIGNOUT_SUCCESS});
@@ -74,7 +83,7 @@ const signout = (dispatch) => {
 
 const tryAutoSignin = (dispatch) => {
   return async () => {
-    const token = AsyncStorage.getItem('token');
+    const token = await AsyncStorage.getItem('token');
     if (token) {
       dispatch({type: AuthActionTypes.SIGNIN_SUCCESS, payload: token});
       navigate('Account');
@@ -87,5 +96,5 @@ const tryAutoSignin = (dispatch) => {
 export const {Provider, Context} = createContext(
   authReducer,
   {signup, signin, signout, tryAutoSignin},
-  {token: null, errorMessage: ''}
+  {token: null, errorMessage: '', isLoading: false},
 );

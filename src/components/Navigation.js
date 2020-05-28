@@ -6,6 +6,7 @@ import {Drawer, Avatar, Title, Caption, Switch, TouchableRipple} from 'react-nat
 import {navigate} from '../helpers/navigationRef';
 import {Context as NavigationContext} from '../context/NavigationContext';
 import {Context as AuthContext} from '../context/AuthContext';
+import Loader from './Loader';
 
 const styles = StyleSheet.create({
   drawerWrapper: {
@@ -45,73 +46,99 @@ const darkStyles = StyleSheet.create({
 });
 
 const Navigation = (props) => {
-  const {signout} = useContext(AuthContext);
+  const {
+    state: {isLoading},
+    signout,
+  } = useContext(AuthContext);
   const {
     state: {isDarkMode},
     handleDarkMode,
   } = useContext(NavigationContext);
 
   return (
-    <View
-      style={[
-        styles.drawerWrapper,
-        isDarkMode ? darkStyles.drawerWrapper : lightStyles.drawerWrapper,
-      ]}>
-      <DrawerContentScrollView {...props}>
-        <View>
-          <View style={[styles.drawerUserDetailsWrapper]}>
-            <Avatar.Image
-              source={{
-                uri: 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
-              }}
-              size={50}
-            />
-            <View style={styles.drawerUserInfoWrapper}>
-              <Title style={isDarkMode && styles.darkModeColor}>Marta Matczanski</Title>
-              <Caption style={isDarkMode && styles.darkModeColor}>Front-End Developer</Caption>
+    <>
+      {isLoading ? (
+        <Loader />
+      ) : (
+        <View
+          style={[
+            styles.drawerWrapper,
+            isDarkMode ? darkStyles.drawerWrapper : lightStyles.drawerWrapper,
+          ]}>
+          <DrawerContentScrollView {...props}>
+            <View>
+              <View style={[styles.drawerUserDetailsWrapper]}>
+                <Avatar.Image
+                  source={{
+                    uri: 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
+                  }}
+                  size={50}
+                />
+                <View style={styles.drawerUserInfoWrapper}>
+                  <Title style={isDarkMode && styles.darkModeColor}>Marta Matczanski</Title>
+                  <Caption style={isDarkMode && styles.darkModeColor}>
+                    Front-End Developer
+                  </Caption>
+                </View>
+              </View>
             </View>
-          </View>
-        </View>
-        <Drawer.Section title="General">
-          <DrawerItem
-            icon={() => (
-              <Icon type="feather" name="home" size={24} color={isDarkMode ? '#fff' : '#000'} />
-            )}
-            label="Home"
-            onPress={() => navigate('Home')}
-            labelStyle={isDarkMode && styles.darkModeColor}
-          />
-          <DrawerItem
-            icon={() => (
-              <Icon type="feather" name="user" size={24} color={isDarkMode ? '#fff' : '#000'} />
-            )}
-            label="Account"
-            onPress={() => navigate('Account')}
-            labelStyle={isDarkMode && styles.darkModeColor}
-          />
-        </Drawer.Section>
-        <Drawer.Section title="Preferences">
-          <TouchableRipple>
-            <View style={styles.darkModeListItem}>
-              <Text style={isDarkMode && styles.darkModeColor}>Dark mode</Text>
-              <Switch
-                value={isDarkMode}
-                onValueChange={() => handleDarkMode(isDarkMode)}
-                color="#1975d2"
+            <Drawer.Section title="General">
+              <DrawerItem
+                icon={() => (
+                  <Icon
+                    type="feather"
+                    name="home"
+                    size={24}
+                    color={isDarkMode ? '#fff' : '#000'}
+                  />
+                )}
+                label="Home"
+                onPress={() => navigate('Home')}
+                labelStyle={isDarkMode && styles.darkModeColor}
               />
-            </View>
-          </TouchableRipple>
-        </Drawer.Section>
-      </DrawerContentScrollView>
-      <DrawerItem
-        icon={() => (
-          <Icon type="feather" name="log-out" size={24} color={isDarkMode ? '#fff' : '#000'} />
-        )}
-        label="Log Out"
-        onPress={signout}
-        labelStyle={isDarkMode && styles.darkModeColor}
-      />
-    </View>
+              <DrawerItem
+                icon={() => (
+                  <Icon
+                    type="feather"
+                    name="user"
+                    size={24}
+                    color={isDarkMode ? '#fff' : '#000'}
+                  />
+                )}
+                label="Account"
+                onPress={() => navigate('Account')}
+                labelStyle={isDarkMode && styles.darkModeColor}
+              />
+            </Drawer.Section>
+            <Drawer.Section title="Preferences">
+              <TouchableRipple>
+                <View style={styles.darkModeListItem}>
+                  <Text style={isDarkMode && styles.darkModeColor}>Dark mode</Text>
+                  <Switch
+                    value={isDarkMode}
+                    onValueChange={() => handleDarkMode(isDarkMode)}
+                    color="#1975d2"
+                  />
+                </View>
+              </TouchableRipple>
+            </Drawer.Section>
+          </DrawerContentScrollView>
+          <DrawerItem
+            icon={() => (
+              <Icon
+                type="feather"
+                name="log-out"
+                size={24}
+                color={isDarkMode ? '#fff' : '#000'}
+              />
+            )}
+            label="Log Out"
+            onPress={signout}
+            labelStyle={isDarkMode && styles.darkModeColor}
+          />
+        </View>
+      )}
+    </>
   );
 };
 
