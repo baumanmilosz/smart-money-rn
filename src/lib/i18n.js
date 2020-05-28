@@ -6,16 +6,17 @@ const pl = require('../locales/pl');
 
 i18n.use(initReactI18next).init({
   debug: true,
-  ns: ['navbar', 'headings'],
+  ns: ['common'],
   defaultNS: 'common',
   fallbackLng: 'en',
   interpolation: {
     escapeValue: false,
   },
   resources: {
-    pl,
     en,
+    pl,
   },
+  lng: 'en',
 });
 
 export default i18n;

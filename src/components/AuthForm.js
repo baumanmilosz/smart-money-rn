@@ -2,9 +2,11 @@ import React, {useContext, useState} from 'react';
 import PropTypes from 'prop-types';
 import {View, StyleSheet, Text, TouchableOpacity} from 'react-native';
 import {Title, TextInput, Button} from 'react-native-paper';
+import {withTranslation} from 'react-i18next';
 import {Context as AuthContext} from '../context/AuthContext';
 import theme from '../styles/theme';
 import {navigate} from '../helpers/navigationRef';
+import LangButtonsMolecule from './LangButtonsMolecule';
 
 const styles = StyleSheet.create({
   signupWrapper: {
@@ -35,7 +37,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const AuthForm = ({onSubmit, authTitle, redirectRouteName, redirectLinkText}) => {
+const AuthForm = ({onSubmit, authTitle, redirectRouteName, redirectLinkText, submitButton, t}) => {
   const {
     state: {errorMessage},
   } = useContext(AuthContext);
@@ -46,7 +48,7 @@ const AuthForm = ({onSubmit, authTitle, redirectRouteName, redirectLinkText}) =>
     <View style={styles.signupWrapper}>
       <Title style={styles.authFormTitle}>{authTitle}</Title>
       <TextInput
-        label="Email"
+        label={t('auth:email')}
         mode="outlined"
         style={styles.authFormInput}
         theme={{colors: theme.colors}}
@@ -56,7 +58,7 @@ const AuthForm = ({onSubmit, authTitle, redirectRouteName, redirectLinkText}) =>
         autoCorrect={false}
       />
       <TextInput
-        label="Password"
+        label={t('auth:password')}
         mode="outlined"
         theme={{colors: theme.colors}}
         style={styles.authFormInput}
@@ -72,11 +74,12 @@ const AuthForm = ({onSubmit, authTitle, redirectRouteName, redirectLinkText}) =>
         color={theme.colors.primary}
         style={styles.authFormSubmitButton}
         onPress={() => onSubmit(email, password)}>
-        {authTitle}
+        {submitButton}
       </Button>
       <TouchableOpacity onPress={() => navigate(redirectRouteName)}>
         <Text style={styles.styledRedirectLinkText}>{redirectLinkText}</Text>
       </TouchableOpacity>
+      <LangButtonsMolecule />
     </View>
   );
 };
@@ -84,8 +87,10 @@ const AuthForm = ({onSubmit, authTitle, redirectRouteName, redirectLinkText}) =>
 AuthForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   authTitle: PropTypes.string.isRequired,
+  submitButton: PropTypes.string.isRequired,
   redirectRouteName: PropTypes.string.isRequired,
   redirectLinkText: PropTypes.string.isRequired,
+  t: PropTypes.func.isRequired,
 };
 
-export default AuthForm;
+export default withTranslation()(AuthForm);

@@ -1,9 +1,11 @@
 import React, {useContext} from 'react';
+import PropTypes from 'prop-types';
+import {withTranslation} from 'react-i18next';
 import {Context as AuthContext} from '../context/AuthContext';
 import AuthForm from '../components/AuthForm';
 import Loader from '../components/Loader';
 
-const SigninScreen = () => {
+const SigninScreen = ({t}) => {
   const {
     state: {isLoading},
     signin,
@@ -16,13 +18,18 @@ const SigninScreen = () => {
       ) : (
         <AuthForm
           onSubmit={signin}
-          authTitle="Sign In"
+          authTitle={t('auth:signin_title')}
+          submitButton={t('auth:signin_button')}
           redirectRouteName="Signup"
-          redirectLinkText="You don't hava an account? Register now!"
+          redirectLinkText={t('auth:signin_redirect_link')}
         />
       )}
     </>
   );
 };
 
-export default SigninScreen;
+SigninScreen.propTypes = {
+  t: PropTypes.func.isRequired,
+};
+
+export default withTranslation()(SigninScreen);

@@ -1,0 +1,12 @@
+{
+  "auth": {
+    "signup_title": "Sign Up",
+    "signin_title": "Sign In",
+    "email": "E-mail",
+    "password": "Password",
+    "sigup_button": "Create account",
+    "signin_button": "Sign In",
+    "signup_redirect_link": "Already have an account? Log in instead!",
+    "signin_redirect_link": "You don't hava an account? Register now!"
+  }
+}
