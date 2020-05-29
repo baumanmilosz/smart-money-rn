@@ -1,5 +1,3 @@
-const DrawerActionTypes = {
-  HANDLE_DARK_MODE: 'DrawerActionTypes.HANDLE_DARK_MODE',
-};
+const DrawerActionTypes = {};
 
 export default DrawerActionTypes;

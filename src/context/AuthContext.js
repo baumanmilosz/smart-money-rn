@@ -11,7 +11,7 @@ const authReducer = (state, {type, payload}) => {
     case AuthActionTypes.SIGNUP_SUCCESS:
       return {...state, errorMessage: '', token: payload, isLoading: false};
     case AuthActionTypes.SIGNUP_FAILURE:
-      return {...state, errorMessage: payload, token: payload, isLoading: false};
+      return {...state, errorMessage: payload, token: null, isLoading: false};
     case AuthActionTypes.SIGNIN:
       return {...state, isLoading: true};
     case AuthActionTypes.SIGNIN_SUCCESS:
@@ -24,6 +24,8 @@ const authReducer = (state, {type, payload}) => {
       return {...state, token: null, isLoading: false};
     case AuthActionTypes.SIGNOUT_FAILURE:
       return {...state, errorMessage: payload, isLoading: false};
+    case AuthActionTypes.CLEAR_ERROR_MESSAGE:
+      return {...state, errorMessage: ''};
     default:
       return state;
   }
@@ -86,15 +88,21 @@ const tryAutoSignin = (dispatch) => {
     const token = await AsyncStorage.getItem('token');
     if (token) {
       dispatch({type: AuthActionTypes.SIGNIN_SUCCESS, payload: token});
-      navigate('Account');
+      navigate('AddTransaction');
     } else {
       navigate('Signin');
     }
   };
 };
 
+const clearErrorMessage = (dispatch) => {
+  return () => {
+    dispatch({type: AuthActionTypes.CLEAR_ERROR_MESSAGE});
+  };
+};
+
 export const {Provider, Context} = createContext(
   authReducer,
-  {signup, signin, signout, tryAutoSignin},
-  {token: null, errorMessage: '', isLoading: false},
+  {signup, signin, signout, tryAutoSignin, clearErrorMessage},
+  {token: null, errorMessage: '', isLoading: false}
 );

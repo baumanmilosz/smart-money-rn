@@ -8,6 +8,7 @@ const AuthActionTypes = {
   SIGNOUT: 'AuthActionTypes.SIGNOUT',
   SIGNOUT_SUCCESS: 'AuthActionTypes.SIGNOUT_SUCCESS',
   SIGNOUT_FAILURE: 'AuthActionTypes.SIGNOUT_FAILURE',
+  CLEAR_ERROR_MESSAGE: 'AuthActionTypes.CLEAR_ERROR_MESSAGE',
 };
 
 export default AuthActionTypes;

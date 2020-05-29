@@ -8,10 +8,13 @@ import {navigationRef} from './src/helpers/navigationRef';
 import Navigation from './src/components/Navigation';
 import {Provider as AuthProvider} from './src/context/AuthContext';
 import {Provider as NavigationProvider} from './src/context/NavigationContext';
+import {Provider as TransactionProvider} from './src/context/TransactionContext';
 import SignupScreen from './src/screens/SignupScreen';
 import SigninScreen from './src/screens/SigninScreen';
 import ResolveAuthScreen from './src/screens/ResolveAuthScreen';
 import i18n from './src/lib/i18n';
+import AddTransactionScreen from './src/screens/AddTransactionScreen';
+import TransactionListScreen from './src/screens/TransactionListScreen';
 
 const Drawer = createDrawerNavigator();
 
@@ -26,6 +29,8 @@ const App = () => {
         <Drawer.Screen name="Signin" component={SigninScreen} />
         <Drawer.Screen name="Home" component={HomeScreen} />
         <Drawer.Screen name="Account" component={AccountScreen} />
+        <Drawer.Screen name="AddTransaction" component={AddTransactionScreen} />
+        <Drawer.Screen name="TransactionList" component={TransactionListScreen} />
       </Drawer.Navigator>
     </NavigationContainer>
   );
@@ -36,7 +41,9 @@ export default () => {
     <I18nextProvider i18n={i18n}>
       <AuthProvider>
         <NavigationProvider>
-          <App />
+          <TransactionProvider>
+            <App />
+          </TransactionProvider>
         </NavigationProvider>
       </AuthProvider>
     </I18nextProvider>

@@ -5,6 +5,8 @@ const theme = {
     black: 'rgb(0, 0, 0)',
     white: 'rgb(255, 255, 255)',
     red: 'rgb(255, 0, 0)',
+    green: '#0ac778',
+    gray: '#999',
   },
 };
 
