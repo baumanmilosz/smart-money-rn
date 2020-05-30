@@ -1,10 +1,12 @@
 import React from 'react';
 import {Header} from 'react-native-elements';
 import PropTypes from 'prop-types';
+import {useNavigation} from '@react-navigation/native';
 import CommonNavButton from './CommonNavButton';
 import {navigate} from '../helpers/navigationRef';
 
-const CommonHeader = ({navigation, text}) => {
+const CommonHeader = ({text}) => {
+  const navigation = useNavigation();
   return (
     <Header
       leftComponent={
@@ -22,9 +24,6 @@ const CommonHeader = ({navigation, text}) => {
 
 CommonHeader.propTypes = {
   text: PropTypes.string.isRequired,
-  navigation: PropTypes.shape({
-    openDrawer: PropTypes.func.isRequired,
-  }).isRequired,
 };
 
 export default CommonHeader;

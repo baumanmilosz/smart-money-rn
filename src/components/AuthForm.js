@@ -93,7 +93,7 @@ AuthForm.propTypes = {
   redirectLinkText: PropTypes.string.isRequired,
   t: PropTypes.func.isRequired,
   navigation: PropTypes.shape({
-    addListner: PropTypes.func.isRequired,
+    addListener: PropTypes.func.isRequired,
   }).isRequired,
 };
 

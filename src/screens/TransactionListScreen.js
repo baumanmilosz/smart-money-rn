@@ -4,6 +4,7 @@ import {useNavigation} from '@react-navigation/native';
 import {Context as TransactionContext} from '../context/TransactionContext';
 import TransactionListItem from '../components/TransactionListItem';
 import CommonHeader from '../components/CommonHeader';
+import {navigate} from '../helpers/navigationRef';
 
 const styles = StyleSheet.create({
   transactionListWrapper: {
@@ -26,7 +27,7 @@ const TransactionListScreen = () => {
   return (
     <>
       <View style={styles.transactionListWrapper}>
-        <CommonHeader text="Transaction list" navigation={navigation} />
+        <CommonHeader text="Transaction list" />
         <FlatList
           data={transactionList}
           keyExtractor={(item) => item._id}
@@ -40,6 +41,7 @@ const TransactionListScreen = () => {
                 category={category}
                 price={price}
                 date={date}
+                showDetails={() => navigate('TransactionDetails', {_id: item._id})}
               />
             );
           }}

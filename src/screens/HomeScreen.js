@@ -1,22 +1,15 @@
 import React from 'react';
 import {WebView} from 'react-native-webview';
-import PropTypes from 'prop-types';
 import CommonHeader from '../components/CommonHeader';
 import CommonView from '../components/CommonView';
 
-const HomeScreen = ({navigation}) => {
+const HomeScreen = () => {
   return (
     <CommonView>
-      <CommonHeader text="Home" navigation={navigation} />
+      <CommonHeader text="Home" />
       <WebView source={{uri: 'https://youtube.com/'}} />
     </CommonView>
   );
-};
-
-HomeScreen.propTypes = {
-  navigation: PropTypes.shape({
-    navigate: PropTypes.func.isRequired,
-  }).isRequired,
 };
 
 export default HomeScreen;

@@ -1,18 +1,13 @@
 import React from 'react';
 import {View} from 'react-native';
-import PropTypes from 'prop-types';
 import CommonHeader from '../components/CommonHeader';
 
-const AccountScreen = ({navigation}) => {
+const AccountScreen = () => {
   return (
     <View>
-      <CommonHeader text="Account" navigation={navigation} />
+      <CommonHeader text="Account" />
     </View>
   );
-};
-
-AccountScreen.propTypes = {
-  navigation: PropTypes.object.isRequired,
 };
 
 export default AccountScreen;

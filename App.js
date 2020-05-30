@@ -15,6 +15,7 @@ import ResolveAuthScreen from './src/screens/ResolveAuthScreen';
 import i18n from './src/lib/i18n';
 import AddTransactionScreen from './src/screens/AddTransactionScreen';
 import TransactionListScreen from './src/screens/TransactionListScreen';
+import TransactionDetailsScreen from './src/screens/TransactionDetailsScreen';
 
 const Drawer = createDrawerNavigator();
 
@@ -31,6 +32,7 @@ const App = () => {
         <Drawer.Screen name="Account" component={AccountScreen} />
         <Drawer.Screen name="AddTransaction" component={AddTransactionScreen} />
         <Drawer.Screen name="TransactionList" component={TransactionListScreen} />
+        <Drawer.Screen name="TransactionDetails" component={TransactionDetailsScreen} />
       </Drawer.Navigator>
     </NavigationContainer>
   );

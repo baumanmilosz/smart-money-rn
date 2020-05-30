@@ -17,6 +17,16 @@ const authReducer = (state, {type, payload}) => {
       return {...state, transactionList: payload, isLoading: false};
     case `${TransactionActionTypes.GET_TRANSACTION_LIST}_FAILURE`:
       return {...state, isLoading: false};
+    case `${TransactionActionTypes.REMOVE_TRANSACTION_LIST_ITEM}`:
+      return {...state, isLoading: false};
+    case `${TransactionActionTypes.REMOVE_TRANSACTION_LIST_ITEM}_SUCCESS`:
+      return {
+        ...state,
+        isLoading: false,
+        transactionList: [...state.transactionList.filter((item) => item._id !== payload)],
+      };
+    case `${TransactionActionTypes.REMOVE_TRANSACTION_LIST_ITEM}_FAILURE`:
+      return {...state, isLoading: false};
     default:
       return state;
   }
@@ -54,8 +64,20 @@ const getTransactionList = (dispatch) => {
   };
 };
 
+const removeTransactionListItem = (dispatch) => {
+  return async (id) => {
+    try {
+      const res = await apiClient.delete(`/transaction-list/${id}`);
+      dispatch({type: TransactionActionTypes.REMOVE_TRANSACTION_LIST_ITEM, payload: res.data});
+      navigate('TransactionList');
+    } catch (e) {
+      dispatch({type: `${TransactionActionTypes.REMOVE_TRANSACTION_LIST_ITEM}_FAILURE`});
+    }
+  };
+};
+
 export const {Provider, Context} = createContext(
   authReducer,
-  {addTransaction, getTransactionList},
+  {addTransaction, getTransactionList, removeTransactionListItem},
   {isLoading: false, transaction: {}, transactionList: []}
 );

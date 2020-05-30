@@ -1,5 +1,4 @@
 import React, {useContext, useState} from 'react';
-import PropTypes from 'prop-types';
 import {Picker} from '@react-native-community/picker';
 import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import {Caption, RadioButton, TextInput} from 'react-native-paper';
@@ -33,10 +32,10 @@ const styles = StyleSheet.create({
   },
 });
 
-const AddTransactionScreen = ({navigation}) => {
+const AddTransactionScreen = () => {
   const [type, setType] = useState(TransactionType.expense);
   const [title, setTitle] = useState('');
-  const [category, setCategory] = useState();
+  const [category, setCategory] = useState(transactionsCategory.expenses[0].value);
   const [price, setPrice] = useState('');
   const [date, setDate] = useState(new Date());
   const [show, setShow] = useState(false);
@@ -70,7 +69,7 @@ const AddTransactionScreen = ({navigation}) => {
         <Loader />
       ) : (
         <CommonView>
-          <CommonHeader text="Add transaction" navigation={navigation} />
+          <CommonHeader text="Add transaction" />
           <View style={styles.expenseWrapper}>
             <Caption style={{marginTop: 10, fontSize: 15, color: theme.colors.primary}}>
               Choose transaction type:
@@ -101,7 +100,8 @@ const AddTransactionScreen = ({navigation}) => {
               <Picker
                 style={styles.categoryPicker}
                 selectedValue={category}
-                onValueChange={(itemValue) => setCategory(itemValue)}>
+                onValueChange={(itemValue) => setCategory(itemValue)}
+                prompt="Select category">
                 {transactionsCategory && renderTransactionItems()}
               </Picker>
             </View>
@@ -147,12 +147,6 @@ const AddTransactionScreen = ({navigation}) => {
       )}
     </>
   );
-};
-
-AddTransactionScreen.propTypes = {
-  navigation: PropTypes.shape({
-    navigate: PropTypes.func.isRequired,
-  }).isRequired,
 };
 
 export default AddTransactionScreen;

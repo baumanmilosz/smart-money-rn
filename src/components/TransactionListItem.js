@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import moment from 'moment';
 import theme from '../styles/theme';
 import TransactionType from '../constans/TransactionType';
@@ -25,13 +25,13 @@ const styles = StyleSheet.create({
   },
 });
 
-const TransactionListItem = ({type, title, price, category, date}) => {
+const TransactionListItem = ({type, title, price, category, date, showDetails}) => {
   const getColorPrice = () => {
     if (type === TransactionType.expense) return theme.colors.red;
     return theme.colors.green;
   };
   return (
-    <>
+    <TouchableOpacity onPress={showDetails}>
       <View style={styles.transactionListItemWrapper}>
         <View style={styles.transactionItemInnerWrapper}>
           <Text style={styles.detail}>{title}</Text>
@@ -42,7 +42,7 @@ const TransactionListItem = ({type, title, price, category, date}) => {
           <Text style={styles.subDetail}>{moment(date).format('MM/DD/YY')}</Text>
         </View>
       </View>
-    </>
+    </TouchableOpacity>
   );
 };
 
@@ -52,6 +52,7 @@ TransactionListItem.propTypes = {
   price: PropTypes.string.isRequired,
   category: PropTypes.string.isRequired,
   date: PropTypes.string.isRequired,
+  showDetails: PropTypes.func.isRequired,
 };
 
 export default TransactionListItem;
