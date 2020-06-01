@@ -1,4 +1,4 @@
-const transactionsCategory = {
+const TransactionsCategory = {
   expenses: [
     {
       id: 'C01S01',
@@ -69,4 +69,4 @@ const transactionsCategory = {
   ],
 };
 
-export default transactionsCategory;
+export default TransactionsCategory;

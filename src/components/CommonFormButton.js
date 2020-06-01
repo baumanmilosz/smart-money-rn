@@ -10,14 +10,15 @@ const styles = StyleSheet.create({
   },
 });
 
-const CommonFormButton = ({title, onSubmit, isDisabled}) => {
+const CommonFormButton = ({title, onSubmit, isDisabled, style, icon}) => {
   return (
     <Button
       mode="contained"
       color={theme.colors.primary}
-      style={styles.commonFormButton}
+      style={[style, styles.commonFormButton]}
       onPress={onSubmit}
-      disabled={isDisabled}>
+      disabled={isDisabled}
+      icon={icon}>
       {title}
     </Button>
   );
@@ -25,12 +26,16 @@ const CommonFormButton = ({title, onSubmit, isDisabled}) => {
 
 CommonFormButton.defaultProps = {
   isDisabled: false,
+  style: null,
+  icon: '',
 };
 
 CommonFormButton.propTypes = {
   title: PropTypes.string.isRequired,
   onSubmit: PropTypes.func.isRequired,
   isDisabled: PropTypes.bool,
+  style: PropTypes.object,
+  icon: PropTypes.string,
 };
 
 export default CommonFormButton;

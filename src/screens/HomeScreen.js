@@ -5,10 +5,12 @@ import CommonView from '../components/CommonView';
 
 const HomeScreen = () => {
   return (
-    <CommonView>
+    <>
       <CommonHeader text="Home" />
-      <WebView source={{uri: 'https://youtube.com/'}} />
-    </CommonView>
+      <CommonView>
+        <WebView source={{uri: 'https://youtube.com/'}} />
+      </CommonView>
+    </>
   );
 };
 

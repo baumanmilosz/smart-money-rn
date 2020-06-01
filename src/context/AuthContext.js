@@ -83,18 +83,6 @@ const signout = (dispatch) => {
   };
 };
 
-const tryAutoSignin = (dispatch) => {
-  return async () => {
-    const token = await AsyncStorage.getItem('token');
-    if (token) {
-      dispatch({type: AuthActionTypes.SIGNIN_SUCCESS, payload: token});
-      navigate('AddTransaction');
-    } else {
-      navigate('Signin');
-    }
-  };
-};
-
 const clearErrorMessage = (dispatch) => {
   return () => {
     dispatch({type: AuthActionTypes.CLEAR_ERROR_MESSAGE});
@@ -103,6 +91,6 @@ const clearErrorMessage = (dispatch) => {
 
 export const {Provider, Context} = createContext(
   authReducer,
-  {signup, signin, signout, tryAutoSignin, clearErrorMessage},
+  {signup, signin, signout, clearErrorMessage},
   {token: null, errorMessage: '', isLoading: false}
 );

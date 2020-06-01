@@ -11,11 +11,11 @@ import {Provider as NavigationProvider} from './src/context/NavigationContext';
 import {Provider as TransactionProvider} from './src/context/TransactionContext';
 import SignupScreen from './src/screens/SignupScreen';
 import SigninScreen from './src/screens/SigninScreen';
-import ResolveAuthScreen from './src/screens/ResolveAuthScreen';
 import i18n from './src/lib/i18n';
 import AddTransactionScreen from './src/screens/AddTransactionScreen';
 import TransactionListScreen from './src/screens/TransactionListScreen';
 import TransactionDetailsScreen from './src/screens/TransactionDetailsScreen';
+import EditTransactionScreen from './src/screens/EditTransactionScreen';
 
 const Drawer = createDrawerNavigator();
 
@@ -23,14 +23,14 @@ const App = () => {
   return (
     <NavigationContainer ref={navigationRef}>
       <Drawer.Navigator
-        initialRouteName="ResolveAuth"
+        initialRouteName="TransactionList"
         drawerContent={(props) => <Navigation {...props} />}>
-        <Drawer.Screen name="ResolveAuth" component={ResolveAuthScreen} />
         <Drawer.Screen name="Signup" component={SignupScreen} />
         <Drawer.Screen name="Signin" component={SigninScreen} />
         <Drawer.Screen name="Home" component={HomeScreen} />
         <Drawer.Screen name="Account" component={AccountScreen} />
         <Drawer.Screen name="AddTransaction" component={AddTransactionScreen} />
+        <Drawer.Screen name="EditTransaction" component={EditTransactionScreen} />
         <Drawer.Screen name="TransactionList" component={TransactionListScreen} />
         <Drawer.Screen name="TransactionDetails" component={TransactionDetailsScreen} />
       </Drawer.Navigator>

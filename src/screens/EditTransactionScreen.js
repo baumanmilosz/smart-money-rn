@@ -1,31 +1,38 @@
 import React, {useContext} from 'react';
+import PropTypes from 'prop-types';
 import CommonHeader from '../components/CommonHeader';
 import {Context as TransactionContext} from '../context/TransactionContext';
 import Loader from '../components/Loader';
 import TransactionForm from '../components/TransactionForm';
 
-const AddTransactionScreen = () => {
+const AddTransactionScreen = ({route}) => {
   const {
     state: {isLoading},
-    addTransaction,
+    editTransaction,
   } = useContext(TransactionContext);
+
+  const {_id} = route.params;
   return (
     <>
       {isLoading ? (
         <Loader />
       ) : (
         <>
-          <CommonHeader text="Add transaction" />
+          <CommonHeader text="Edit transaction" />
           <TransactionForm
             submitButtonAction={(type, title, category, price, date) =>
-              addTransaction(type, title, category, price, date)
+              editTransaction(type, title, category, price, date, _id)
             }
-            submitButtonText="Add transaction"
+            submitButtonText="Edit transaction"
           />
         </>
       )}
     </>
   );
+};
+
+AddTransactionScreen.propTypes = {
+  route: PropTypes.object.isRequired,
 };
 
 export default AddTransactionScreen;

@@ -7,9 +7,9 @@ import TransactionType from '../constans/TransactionType';
 
 const styles = StyleSheet.create({
   transactionListItemWrapper: {
-    padding: 15,
+    padding: 10,
     marginBottom: 2,
-    backgroundColor: '#F5F3F3',
+    backgroundColor: theme.colors.white,
   },
   transactionItemInnerWrapper: {
     flexDirection: 'row',
@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   subDetail: {
-    fontSize: 14,
+    fontSize: 13,
     color: theme.colors.gray,
   },
 });

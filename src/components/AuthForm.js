@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext, useEffect, useRef, useState} from 'react';
 import PropTypes from 'prop-types';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {TextInput, Title} from 'react-native-paper';
@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
   signupWrapper: {
     flex: 1,
     justifyContent: 'center',
-    padding: 20,
+    padding: 10,
     backgroundColor: theme.colors.white,
   },
   authFormTitle: {
@@ -43,6 +43,7 @@ const AuthForm = ({onSubmit, authTitle, redirectRouteName, redirectLinkText, sub
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigation = useNavigation();
+  const inputRef = useRef();
 
   useEffect(() => {
     return navigation.addListener('blur', () => {
@@ -63,8 +64,11 @@ const AuthForm = ({onSubmit, authTitle, redirectRouteName, redirectLinkText, sub
         onChangeText={setEmail}
         autoCapitalize="none"
         autoCorrect={false}
+        returnKeyType="next"
+        onSubmitEditing={() => inputRef.current.focus()}
       />
       <TextInput
+        ref={inputRef}
         label={t('auth:password')}
         mode="outlined"
         theme={{colors: theme.colors}}
