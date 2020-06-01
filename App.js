@@ -1,7 +1,8 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import {I18nextProvider} from 'react-i18next';
+import SplashScreen from 'react-native-splash-screen';
 import HomeScreen from './src/screens/HomeScreen';
 import AccountScreen from './src/screens/AccountScreen';
 import {navigationRef} from './src/helpers/navigationRef';
@@ -20,6 +21,7 @@ import EditTransactionScreen from './src/screens/EditTransactionScreen';
 const Drawer = createDrawerNavigator();
 
 const App = () => {
+  useEffect(() => SplashScreen.hide(), []);
   return (
     <NavigationContainer ref={navigationRef}>
       <Drawer.Navigator
