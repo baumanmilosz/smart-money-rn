@@ -17,16 +17,20 @@ import AddTransactionScreen from './src/screens/AddTransactionScreen';
 import TransactionListScreen from './src/screens/TransactionListScreen';
 import TransactionDetailsScreen from './src/screens/TransactionDetailsScreen';
 import EditTransactionScreen from './src/screens/EditTransactionScreen';
+import ResolveAuthScreen from './src/screens/ResolveAuthScreen';
 
 const Drawer = createDrawerNavigator();
 
 const App = () => {
-  useEffect(() => SplashScreen.hide(), []);
+  useEffect(() => {
+    SplashScreen.hide();
+  }, []);
   return (
     <NavigationContainer ref={navigationRef}>
       <Drawer.Navigator
-        initialRouteName="TransactionList"
+        initialRouteName="ResolveAuth"
         drawerContent={(props) => <Navigation {...props} />}>
+        <Drawer.Screen name="ResolveAuth" component={ResolveAuthScreen} />
         <Drawer.Screen name="Signup" component={SignupScreen} />
         <Drawer.Screen name="Signin" component={SigninScreen} />
         <Drawer.Screen name="Home" component={HomeScreen} />

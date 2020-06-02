@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
 
 const Navigation = (props) => {
   const {
-    state: {isLoading},
+    state: {isLoading, email},
     signout,
   } = useContext(AuthContext);
   const {
@@ -62,7 +62,7 @@ const Navigation = (props) => {
                   size={50}
                 />
                 <View style={styles.drawerUserInfoWrapper}>
-                  <Title>Marta Matczanski</Title>
+                  <Title>{email}</Title>
                   <Caption>Front-End Developer</Caption>
                 </View>
               </View>

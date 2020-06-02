@@ -46,10 +46,14 @@ const TransactionListItem = ({type, title, price, category, date, showDetails}) 
   );
 };
 
+TransactionListItem.defaultProps = {
+  price: '',
+};
+
 TransactionListItem.propTypes = {
   type: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
-  price: PropTypes.string.isRequired,
+  price: PropTypes.string,
   category: PropTypes.string.isRequired,
   date: PropTypes.string.isRequired,
   showDetails: PropTypes.func.isRequired,

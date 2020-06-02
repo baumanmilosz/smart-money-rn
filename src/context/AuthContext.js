@@ -15,7 +15,12 @@ const authReducer = (state, {type, payload}) => {
     case AuthActionTypes.SIGNIN:
       return {...state, isLoading: true};
     case AuthActionTypes.SIGNIN_SUCCESS:
-      return {...state, errorMessage: '', token: payload, isLoading: false};
+      return {
+        ...state,
+        errorMessage: '',
+        token: payload,
+        isLoading: false,
+      };
     case AuthActionTypes.SIGNIN_FAILURE:
       return {...state, errorMessage: payload, token: null, isLoading: false};
     case AuthActionTypes.SIGNOUT:
@@ -26,6 +31,12 @@ const authReducer = (state, {type, payload}) => {
       return {...state, errorMessage: payload, isLoading: false};
     case AuthActionTypes.CLEAR_ERROR_MESSAGE:
       return {...state, errorMessage: ''};
+    case AuthActionTypes.GET_USER_INFO:
+      return {...state};
+    case `${AuthActionTypes.GET_USER_INFO}_SUCCESS`:
+      return {...state, email: payload};
+    case `${AuthActionTypes.GET_USER_INFO}_FAILURE`:
+      return {...state, payload: ':)'};
     default:
       return state;
   }
@@ -38,6 +49,7 @@ const signup = (dispatch) => {
       const res = await apiClient.post('/signup', {email, password});
       const {token} = res.data;
       await AsyncStorage.setItem('token', token);
+      await AsyncStorage.setItem('user', email);
       dispatch({type: AuthActionTypes.SIGNUP_SUCCESS, payload: token});
       navigate('Signin');
     } catch (e) {
@@ -45,6 +57,17 @@ const signup = (dispatch) => {
         type: AuthActionTypes.SIGNUP_FAILURE,
         payload: 'Something went wrong with registration',
       });
+    }
+  };
+};
+
+const getUserInfo = (dispatch) => {
+  return async () => {
+    try {
+      const res = await apiClient.get(`/user-info`);
+      dispatch({type: `${AuthActionTypes.GET_USER_INFO}_SUCCESS`, payload: res.data});
+    } catch (e) {
+      dispatch({type: `${AuthActionTypes.GET_USER_INFO}_FAILURE`});
     }
   };
 };
@@ -57,7 +80,7 @@ const signin = (dispatch) => {
       const {token} = res.data;
       await AsyncStorage.setItem('token', token);
       dispatch({type: AuthActionTypes.SIGNIN_SUCCESS, payload: token});
-      navigate('Account');
+      navigate('Home');
     } catch (e) {
       dispatch({
         type: AuthActionTypes.SIGNIN_FAILURE,
@@ -85,12 +108,23 @@ const signout = (dispatch) => {
 
 const clearErrorMessage = (dispatch) => {
   return () => {
-    dispatch({type: AuthActionTypes.CLEAR_ERROR_MESSAGE});
+    dispatch({type: AuthActionTypes.GET_USER_INFO});
+  };
+};
+
+const tryAutoSignIn = (dispatch) => {
+  return async () => {
+    const token = await AsyncStorage.getItem('token');
+    if (token) {
+      dispatch({type: AuthActionTypes.SIGNIN_SUCCESS, payload: {token}});
+      return navigate('Home');
+    }
+    return navigate('Signin');
   };
 };
 
 export const {Provider, Context} = createContext(
   authReducer,
-  {signup, signin, signout, clearErrorMessage},
-  {token: null, errorMessage: '', isLoading: false}
+  {signup, signin, signout, clearErrorMessage, tryAutoSignIn, getUserInfo},
+  {token: null, errorMessage: '', isLoading: false, email: ''}
 );
