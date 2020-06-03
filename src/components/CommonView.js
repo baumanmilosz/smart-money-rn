@@ -9,12 +9,17 @@ const styles = StyleSheet.create({
   },
 });
 
-const CommonView = ({children}) => {
-  return <View style={styles.styledCommonView}>{children}</View>;
+const CommonView = ({children, style}) => {
+  return <View style={[styles.styledCommonView, style]}>{children}</View>;
+};
+
+CommonView.defaultProps = {
+  style: null,
 };
 
 CommonView.propTypes = {
   children: PropTypes.object.isRequired,
+  style: PropTypes.object,
 };
 
 export default CommonView;

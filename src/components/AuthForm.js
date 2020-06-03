@@ -96,9 +96,6 @@ AuthForm.propTypes = {
   redirectRouteName: PropTypes.string.isRequired,
   redirectLinkText: PropTypes.string.isRequired,
   t: PropTypes.func.isRequired,
-  navigation: PropTypes.shape({
-    addListener: PropTypes.func.isRequired,
-  }).isRequired,
 };
 
 export default withTranslation()(AuthForm);

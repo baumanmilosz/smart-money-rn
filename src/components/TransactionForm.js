@@ -1,10 +1,11 @@
-import React, {useState, useRef} from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 import PropTypes from 'prop-types';
 import {View, TouchableOpacity, StyleSheet} from 'react-native';
 import {Caption, RadioButton, TextInput, HelperText} from 'react-native-paper';
 import {Picker} from '@react-native-community/picker';
 import moment from 'moment';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import {useNavigation} from '@react-navigation/native';
 import theme from '../styles/theme';
 import TransactionType from '../constans/TransactionType';
 import TransactionsCategory from '../constans/TransactionsCategory';
@@ -12,7 +13,7 @@ import CommonFormButton from './CommonFormButton';
 import CommonView from './CommonView';
 
 const styles = StyleSheet.create({
-  expenseWrapper: {
+  transactionWrapper: {
     padding: 10,
   },
   transactionInput: {
@@ -30,7 +31,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const TransactionForm = ({submitButtonAction, submitButtonText}) => {
+const TransactionForm = ({submitButtonAction, submitButtonText, categories}) => {
   const [type, setType] = useState(TransactionType.expense);
   const [title, setTitle] = useState('');
   const [category, setCategory] = useState(TransactionsCategory.expenses[0].value);
@@ -40,6 +41,13 @@ const TransactionForm = ({submitButtonAction, submitButtonText}) => {
   const priceInputRef = useRef(null);
   const [isPriceError, setPriceError] = useState(false);
 
+  const navigation = useNavigation();
+  useEffect(() => {
+    return () => {
+      navigation.addListener('blur', () => setPriceError(false));
+    };
+  });
+
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
     // eslint-disable-next-line no-undef
@@ -47,15 +55,19 @@ const TransactionForm = ({submitButtonAction, submitButtonText}) => {
     setDate(currentDate);
   };
 
-  const renderTransactionItems = () => {
+  const renderCategories = () => {
     if (type === TransactionType.expense) {
-      return TransactionsCategory.expenses.map((item) => (
-        <Picker.Item key={item.id} label={item.value} value={item.value} />
-      ));
+      return categories
+        .filter((item) => item.type === TransactionType.expense)
+        .map((item) => {
+          return <Picker.Item key={item.categoryId} label={item.name} value={item.name} />;
+        });
     }
-    return TransactionsCategory.incomes.map((item) => (
-      <Picker.Item key={item.id} label={item.value} value={item.value} />
-    ));
+    return categories
+      .filter((item) => item.type === TransactionType.income)
+      .map((item) => {
+        return <Picker.Item key={item.categoryId} label={item.name} value={item.name} />;
+      });
   };
 
   const _checkPriceValidation = () => {
@@ -66,7 +78,7 @@ const TransactionForm = ({submitButtonAction, submitButtonText}) => {
   };
   return (
     <CommonView>
-      <View style={styles.expenseWrapper}>
+      <View style={styles.transactionWrapper}>
         <Caption style={{marginTop: 10, fontSize: 15, color: theme.colors.primary}}>
           Choose transaction type:
         </Caption>
@@ -96,12 +108,23 @@ const TransactionForm = ({submitButtonAction, submitButtonText}) => {
         />
         <View style={[styles.categoryPickerWrapper, styles.transactionInput]}>
           <Picker
+            palceholder="dasdsa"
             selectedValue={category}
             onValueChange={(itemValue) => setCategory(itemValue)}
-            prompt="Select category">
-            {TransactionsCategory && renderTransactionItems()}
+            prompt="Select category"
+            enabled>
+            {categories.length > 0 ? (
+              renderCategories()
+            ) : (
+              <Picker.Item value="" label="Select category" color={theme.colors.gray} />
+            )}
           </Picker>
         </View>
+        {categories.length === 0 && (
+          <HelperText type="error" visible>
+            Go to &quot;Add category&quot; section and type any category.
+          </HelperText>
+        )}
         <TextInput
           ref={priceInputRef}
           label="Price"
@@ -158,6 +181,7 @@ const TransactionForm = ({submitButtonAction, submitButtonText}) => {
 TransactionForm.propTypes = {
   submitButtonAction: PropTypes.func.isRequired,
   submitButtonText: PropTypes.string.isRequired,
+  categories: PropTypes.array.isRequired,
 };
 
 export default TransactionForm;

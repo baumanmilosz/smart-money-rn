@@ -33,6 +33,12 @@ const authReducer = (state, {type, payload}) => {
       return {...state, isLoading: true};
     case `${TransactionActionTypes.EDIT_TRANSACTION}_FAILURE`:
       return {...state, isLoading: false};
+    case TransactionActionTypes.GET_TRANSACTION_DETAILS:
+      return {...state, isLoading: true};
+    case `${TransactionActionTypes.GET_TRANSACTION_DETAILS}_SUCCESS`:
+      return {...state, isLoading: false, transactionDetails: payload.transactionDetails};
+    case `${TransactionActionTypes.GET_TRANSACTION_DETAILS}_FAILURE`:
+      return {...state, isLoading: false};
     default:
       return state;
   }
@@ -103,8 +109,31 @@ const editTransaction = (dispatch) => {
   };
 };
 
+const getTransactionDetails = (dispatch) => {
+  return async (id) => {
+    dispatch({type: TransactionActionTypes.GET_TRANSACTION_DETAILS});
+    try {
+      const res = await apiClient.get(`/transaction-details/${id}`);
+      dispatch({
+        type: `${TransactionActionTypes.GET_TRANSACTION_DETAILS}_SUCCESS`,
+        payload: {transactionDetails: res.data},
+      });
+    } catch (e) {
+      dispatch({
+        type: `${TransactionActionTypes.GET_TRANSACTION_DETAILS}_FAILURE`,
+      });
+    }
+  };
+};
+
 export const {Provider, Context} = createContext(
   authReducer,
-  {addTransaction, getTransactionList, removeTransactionListItem, editTransaction},
-  {isLoading: false, transaction: {}, transactionList: []}
+  {
+    addTransaction,
+    getTransactionList,
+    removeTransactionListItem,
+    editTransaction,
+    getTransactionDetails,
+  },
+  {isLoading: false, transaction: {}, transactionList: [], transactionDetails: {}}
 );

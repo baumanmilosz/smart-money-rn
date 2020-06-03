@@ -10,6 +10,7 @@ import Navigation from './src/components/Navigation';
 import {Provider as AuthProvider} from './src/context/AuthContext';
 import {Provider as NavigationProvider} from './src/context/NavigationContext';
 import {Provider as TransactionProvider} from './src/context/TransactionContext';
+import {Provider as CategoryProvider} from './src/context/CategoryContext';
 import SignupScreen from './src/screens/SignupScreen';
 import SigninScreen from './src/screens/SigninScreen';
 import i18n from './src/lib/i18n';
@@ -18,6 +19,8 @@ import TransactionListScreen from './src/screens/TransactionListScreen';
 import TransactionDetailsScreen from './src/screens/TransactionDetailsScreen';
 import EditTransactionScreen from './src/screens/EditTransactionScreen';
 import ResolveAuthScreen from './src/screens/ResolveAuthScreen';
+import AddCategoryScreen from './src/screens/AddCategoryScreen';
+import CategoryListScreen from './src/screens/CategoryListScreen';
 
 const Drawer = createDrawerNavigator();
 
@@ -39,6 +42,8 @@ const App = () => {
         <Drawer.Screen name="EditTransaction" component={EditTransactionScreen} />
         <Drawer.Screen name="TransactionList" component={TransactionListScreen} />
         <Drawer.Screen name="TransactionDetails" component={TransactionDetailsScreen} />
+        <Drawer.Screen name="AddCategory" component={AddCategoryScreen} />
+        <Drawer.Screen name="CategoryList" component={CategoryListScreen} />
       </Drawer.Navigator>
     </NavigationContainer>
   );
@@ -49,9 +54,11 @@ export default () => {
     <I18nextProvider i18n={i18n}>
       <AuthProvider>
         <NavigationProvider>
-          <TransactionProvider>
-            <App />
-          </TransactionProvider>
+          <CategoryProvider>
+            <TransactionProvider>
+              <App />
+            </TransactionProvider>
+          </CategoryProvider>
         </NavigationProvider>
       </AuthProvider>
     </I18nextProvider>

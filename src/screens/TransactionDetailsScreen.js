@@ -1,7 +1,8 @@
-import React, {useContext} from 'react';
+import React, {useContext, useEffect} from 'react';
 import {View, StyleSheet} from 'react-native';
 import PropTypes from 'prop-types';
 import moment from 'moment';
+import {useNavigation} from '@react-navigation/native';
 import CommonHeader from '../components/CommonHeader';
 import CommonFormButton from '../components/CommonFormButton';
 import {Context as TransactionContext} from '../context/TransactionContext';
@@ -10,6 +11,7 @@ import TransactionDetailsItem from '../components/TransactionDetailsItem';
 import TransactionDetailsOption from '../constans/TransactionDetailsOption';
 import Loader from '../components/Loader';
 import {navigate} from '../helpers/navigationRef';
+import TransactionDetailsChart from '../components/TransactionDetailsChart';
 
 const styles = StyleSheet.create({
   actionButtonsWrapper: {
@@ -22,8 +24,20 @@ const styles = StyleSheet.create({
 });
 
 const TransactionDetailsScreen = ({route}) => {
-  const {_id, type, title, category, price, date} = route.params;
-  const {removeTransactionListItem, isLoading} = useContext(TransactionContext);
+  const {_id} = route.params;
+  const {
+    state: {isLoading, transactionDetails},
+    removeTransactionListItem,
+    getTransactionDetails,
+  } = useContext(TransactionContext);
+  const navigation = useNavigation();
+  useEffect(() => {
+    navigation.addListener('focus', () => {
+      getTransactionDetails(_id);
+    });
+  }, []);
+
+  const {type, title, category, price, date} = transactionDetails;
 
   return (
     <>
@@ -32,6 +46,7 @@ const TransactionDetailsScreen = ({route}) => {
         <Loader />
       ) : (
         <CommonView>
+          <TransactionDetailsChart />
           <TransactionDetailsItem value={type} caption={TransactionDetailsOption.TYPE} />
           <TransactionDetailsItem value={title} caption={TransactionDetailsOption.TITLE} />
           <TransactionDetailsItem value={category} caption={TransactionDetailsOption.CATEGORY} />

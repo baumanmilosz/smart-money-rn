@@ -48,11 +48,6 @@ const TransactionListScreen = () => {
                   showDetails={() =>
                     navigate('TransactionDetails', {
                       _id: item._id,
-                      type,
-                      title,
-                      category,
-                      price,
-                      date,
                     })
                   }
                 />

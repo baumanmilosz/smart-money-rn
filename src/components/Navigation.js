@@ -67,20 +67,15 @@ const Navigation = (props) => {
                 </View>
               </View>
             </View>
-            <Drawer.Section title="General">
+            <Drawer.Section title="Overview">
               <DrawerItem
                 icon={() => <Icon name="home" size={24} color={theme.colors.black} />}
                 label="Home"
                 onPress={() => navigate('Home')}
               />
               <DrawerItem
-                icon={() => <Icon name="user" size={24} color={theme.colors.black} />}
-                label="Account"
-                onPress={() => navigate('Account')}
-              />
-              <DrawerItem
                 icon={() => <FontAwesomeIcon name="money" size={24} />}
-                label="Add transaction"
+                label="Add Transaction"
                 onPress={() => navigate('AddTransaction')}
               />
               <DrawerItem
@@ -88,10 +83,27 @@ const Navigation = (props) => {
                 label="Transaction List"
                 onPress={() => navigate('TransactionList')}
               />
+              <DrawerItem
+                icon={() => <Icon name="book" size={24} />}
+                label="Add Category"
+                onPress={() => navigate('AddCategory')}
+              />
+              <DrawerItem
+                icon={() => <FontAwesomeIcon name="table" size={24} />}
+                label="Category List"
+                onPress={() => navigate('CategoryList')}
+              />
+            </Drawer.Section>
+            <Drawer.Section title="Others">
+              <DrawerItem
+                icon={() => <Icon name="user" size={24} color={theme.colors.black} />}
+                label="Account"
+                onPress={() => navigate('Account')}
+              />
             </Drawer.Section>
           </DrawerContentScrollView>
           <DrawerItem
-            icon={() => <Icon type="feather" name="log-out" size={24} color={theme.colors.black} />}
+            icon={() => <Icon name="log-out" size={24} color={theme.colors.black} />}
             label="Log Out"
             onPress={signout}
             labelStyle={isDarkMode && styles.darkModeColor}
