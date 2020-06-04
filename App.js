@@ -11,6 +11,7 @@ import {Provider as AuthProvider} from './src/context/AuthContext';
 import {Provider as NavigationProvider} from './src/context/NavigationContext';
 import {Provider as TransactionProvider} from './src/context/TransactionContext';
 import {Provider as CategoryProvider} from './src/context/CategoryContext';
+import {Provider as SettingsProvider} from './src/context/SettingsContext';
 import SignupScreen from './src/screens/SignupScreen';
 import SigninScreen from './src/screens/SigninScreen';
 import i18n from './src/lib/i18n';
@@ -21,6 +22,8 @@ import EditTransactionScreen from './src/screens/EditTransactionScreen';
 import ResolveAuthScreen from './src/screens/ResolveAuthScreen';
 import AddCategoryScreen from './src/screens/AddCategoryScreen';
 import CategoryListScreen from './src/screens/CategoryListScreen';
+import SummaryMonthScreen from './src/screens/SummaryMonthScreen';
+import SettingsScreen from './src/screens/SettingsScreen';
 
 const Drawer = createDrawerNavigator();
 
@@ -44,6 +47,8 @@ const App = () => {
         <Drawer.Screen name="TransactionDetails" component={TransactionDetailsScreen} />
         <Drawer.Screen name="AddCategory" component={AddCategoryScreen} />
         <Drawer.Screen name="CategoryList" component={CategoryListScreen} />
+        <Drawer.Screen name="SummaryMonth" component={SummaryMonthScreen} />
+        <Drawer.Screen name="Settings" component={SettingsScreen} />
       </Drawer.Navigator>
     </NavigationContainer>
   );
@@ -54,11 +59,13 @@ export default () => {
     <I18nextProvider i18n={i18n}>
       <AuthProvider>
         <NavigationProvider>
-          <CategoryProvider>
-            <TransactionProvider>
-              <App />
-            </TransactionProvider>
-          </CategoryProvider>
+          <SettingsProvider>
+            <CategoryProvider>
+              <TransactionProvider>
+                <App />
+              </TransactionProvider>
+            </CategoryProvider>
+          </SettingsProvider>
         </NavigationProvider>
       </AuthProvider>
     </I18nextProvider>

@@ -108,11 +108,9 @@ const TransactionForm = ({submitButtonAction, submitButtonText, categories}) => 
         />
         <View style={[styles.categoryPickerWrapper, styles.transactionInput]}>
           <Picker
-            palceholder="dasdsa"
             selectedValue={category}
             onValueChange={(itemValue) => setCategory(itemValue)}
-            prompt="Select category"
-            enabled>
+            prompt="Select category">
             {categories.length > 0 ? (
               renderCategories()
             ) : (

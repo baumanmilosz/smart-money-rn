@@ -93,12 +93,22 @@ const Navigation = (props) => {
                 label="Category List"
                 onPress={() => navigate('CategoryList')}
               />
+              <DrawerItem
+                icon={() => <FontAwesomeIcon name="wpforms" size={24} />}
+                label="Summary"
+                onPress={() => navigate('SummaryMonth')}
+              />
             </Drawer.Section>
             <Drawer.Section title="Others">
               <DrawerItem
                 icon={() => <Icon name="user" size={24} color={theme.colors.black} />}
                 label="Account"
                 onPress={() => navigate('Account')}
+              />
+              <DrawerItem
+                icon={() => <Icon name="settings" size={24} color={theme.colors.black} />}
+                label="Settings"
+                onPress={() => navigate('Settings')}
               />
             </Drawer.Section>
           </DrawerContentScrollView>
