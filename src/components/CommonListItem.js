@@ -18,7 +18,7 @@ const CommonListItem = ({caption, value}) => {
     <View style={styles.transactionDetailsItemWrapper}>
       <Caption>{caption}</Caption>
       <Divider />
-      <Text style={styles.itemText}>{value} zł</Text>
+      <Text style={styles.itemText}>{typeof value === 'number' ? `${value} zł` : value}</Text>
     </View>
   );
 };

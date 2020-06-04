@@ -13,7 +13,7 @@ const CommonHeader = ({text}) => {
         <CommonNavButton icon="menu" handleNavigation={() => navigation.openDrawer()} />
       }
       centerComponent={{text, style: {color: '#fff'}}}
-      rightComponent={<CommonNavButton icon="home" handleNavigation={() => navigate('Home')} />}
+      rightComponent={<CommonNavButton icon="home" handleNavigation={() => navigate('Summary')} />}
       statusBarProps={{translucent: true}}
       containerStyle={{
         backgroundColor: '#004A9E',

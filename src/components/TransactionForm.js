@@ -1,7 +1,7 @@
 import React, {useState, useRef, useEffect} from 'react';
 import PropTypes from 'prop-types';
 import {View, TouchableOpacity, StyleSheet} from 'react-native';
-import {Caption, RadioButton, TextInput, HelperText} from 'react-native-paper';
+import {TextInput, HelperText} from 'react-native-paper';
 import {Picker} from '@react-native-community/picker';
 import moment from 'moment';
 import DateTimePicker from '@react-native-community/datetimepicker';
@@ -11,6 +11,7 @@ import TransactionType from '../constans/TransactionType';
 import TransactionsCategory from '../constans/TransactionsCategory';
 import CommonFormButton from './CommonFormButton';
 import CommonView from './CommonView';
+import TransactionTypeField from './TransactionTypeField';
 
 const styles = StyleSheet.create({
   transactionWrapper: {
@@ -23,11 +24,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: theme.colors.black,
     borderRadius: 5,
-  },
-  singleTransactionType: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginHorizontal: 10,
   },
 });
 
@@ -79,21 +75,7 @@ const TransactionForm = ({submitButtonAction, submitButtonText, categories}) => 
   return (
     <CommonView>
       <View style={styles.transactionWrapper}>
-        <Caption style={{marginTop: 10, fontSize: 15, color: theme.colors.primary}}>
-          Choose transaction type:
-        </Caption>
-        <View>
-          <RadioButton.Group onValueChange={(value) => setType(value)} value={type}>
-            <View style={styles.singleTransactionType}>
-              <RadioButton value={TransactionType.expense} color={theme.colors.primary} />
-              <Caption style={{color: theme.colors.primary, fontSize: 13}}>Expense</Caption>
-            </View>
-            <View style={styles.singleTransactionType}>
-              <RadioButton value={TransactionType.income} color={theme.colors.primary} />
-              <Caption style={{color: theme.colors.primary, fontSize: 13}}>Income</Caption>
-            </View>
-          </RadioButton.Group>
-        </View>
+        <TransactionTypeField type={type} setType={setType} />
         <TextInput
           label="Title"
           value={title}

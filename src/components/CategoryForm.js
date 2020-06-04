@@ -1,4 +1,4 @@
-import React, {useContext, useRef, useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {View, StyleSheet} from 'react-native';
 import {Caption, RadioButton, TextInput} from 'react-native-paper';
 import theme from '../styles/theme';
@@ -24,8 +24,6 @@ const styles = StyleSheet.create({
 const CategoryForm = () => {
   const [type, setType] = useState(TransactionType.expense);
   const [name, setName] = useState('');
-  const [estimateValue, setEstimateValue] = useState('');
-  const estimateValueFieldRef = useRef(null);
   const {addCategory} = useContext(CategoryContext);
 
   return (
@@ -53,26 +51,8 @@ const CategoryForm = () => {
         autoCorrect={false}
         style={styles.categoryInput}
         returnKeyType="next"
-        onSubmitEditing={() => estimateValueFieldRef.current.focus()}
       />
-      <TextInput
-        ref={estimateValueFieldRef}
-        label="Estimate value"
-        value={estimateValue}
-        onChangeText={(value) => setEstimateValue(value)}
-        mode="outlined"
-        theme={{colors: theme.colors}}
-        autoCapitalize="none"
-        autoCorrect={false}
-        style={styles.categoryInput}
-        returnKeyType="next"
-        keyboardType="numeric"
-        contextMenuHidden
-      />
-      <CommonFormButton
-        onSubmit={() => addCategory(type, name, estimateValue)}
-        title="Add category"
-      />
+      <CommonFormButton onSubmit={() => addCategory(type, name)} title="Add category" />
     </View>
   );
 };

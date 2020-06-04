@@ -80,7 +80,7 @@ const signin = (dispatch) => {
       const {token} = res.data;
       await AsyncStorage.setItem('token', token);
       dispatch({type: AuthActionTypes.SIGNIN_SUCCESS, payload: token});
-      navigate('Home');
+      navigate('Summary');
     } catch (e) {
       dispatch({
         type: AuthActionTypes.SIGNIN_FAILURE,
@@ -117,7 +117,7 @@ const tryAutoSignIn = (dispatch) => {
     const token = await AsyncStorage.getItem('token');
     if (token) {
       dispatch({type: AuthActionTypes.SIGNIN_SUCCESS, payload: {token}});
-      return navigate('Home');
+      return navigate('Summary');
     }
     return navigate('Signin');
   };

@@ -28,7 +28,7 @@ const saveSettings = (dispatch) => {
     try {
       await apiClient.post('/settings', {month});
       dispatch({type: `${SettingsActionTypes.SET_MONTH}_SUCCESS`, payload: month});
-      navigate('Home');
+      navigate('Summary');
     } catch (e) {
       dispatch({type: `${SettingsActionTypes.SET_MONTH}_FAILURE`});
     }

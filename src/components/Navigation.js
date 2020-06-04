@@ -2,7 +2,9 @@ import React, {useContext} from 'react';
 import {View, StyleSheet} from 'react-native';
 import {DrawerContentScrollView, DrawerItem} from '@react-navigation/drawer';
 import Icon from 'react-native-vector-icons/Feather';
-import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import Entypo from 'react-native-vector-icons/Entypo';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {Drawer, Avatar, Title, Caption} from 'react-native-paper';
 import {navigate} from '../helpers/navigationRef';
 import {Context as NavigationContext} from '../context/NavigationContext';
@@ -69,34 +71,34 @@ const Navigation = (props) => {
             </View>
             <Drawer.Section title="Overview">
               <DrawerItem
-                icon={() => <Icon name="home" size={24} color={theme.colors.black} />}
-                label="Home"
-                onPress={() => navigate('Home')}
+                icon={() => <FontAwesome name="wpforms" size={24} />}
+                label="Summary"
+                onPress={() => navigate('Summary')}
               />
               <DrawerItem
-                icon={() => <FontAwesomeIcon name="money" size={24} />}
+                icon={() => <MaterialCommunityIcons name="bank-plus" size={24} />}
                 label="Add Transaction"
                 onPress={() => navigate('AddTransaction')}
               />
               <DrawerItem
-                icon={() => <Icon name="list" size={24} />}
+                icon={() => <Entypo name="list" size={24} />}
                 label="Transaction List"
                 onPress={() => navigate('TransactionList')}
               />
               <DrawerItem
-                icon={() => <Icon name="book" size={24} />}
+                icon={() => <MaterialCommunityIcons name="database-plus" size={24} />}
                 label="Add Category"
                 onPress={() => navigate('AddCategory')}
               />
               <DrawerItem
-                icon={() => <FontAwesomeIcon name="table" size={24} />}
+                icon={() => <MaterialCommunityIcons name="table-column" size={24} />}
                 label="Category List"
                 onPress={() => navigate('CategoryList')}
               />
               <DrawerItem
-                icon={() => <FontAwesomeIcon name="wpforms" size={24} />}
-                label="Summary"
-                onPress={() => navigate('SummaryMonth')}
+                icon={() => <Entypo name="progress-two" size={24} />}
+                label="Limits"
+                onPress={() => navigate('Limits')}
               />
             </Drawer.Section>
             <Drawer.Section title="Others">

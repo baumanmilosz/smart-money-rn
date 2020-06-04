@@ -16,18 +16,23 @@ const SummaryItem = ({title, incomeCaption, incomeValue, expenseCaption, expense
   return (
     <View style={styles.summaryItemWrapper}>
       <Subheading style={styles.itemTitle}>{title}</Subheading>
-      <CommonListItem caption={incomeCaption} value={incomeValue} />
-      <CommonListItem caption={expenseCaption} value={expenseValue} />
+      <CommonListItem caption={incomeCaption} value={incomeValue || '-'} />
+      <CommonListItem caption={expenseCaption} value={expenseValue || '-'} />
     </View>
   );
+};
+
+SummaryItem.defaultProps = {
+  incomeValue: '',
+  expenseValue: '',
 };
 
 SummaryItem.propTypes = {
   title: PropTypes.string.isRequired,
   incomeCaption: PropTypes.string.isRequired,
-  incomeValue: PropTypes.number.isRequired,
   expenseCaption: PropTypes.string.isRequired,
-  expenseValue: PropTypes.number.isRequired,
+  incomeValue: PropTypes.number,
+  expenseValue: PropTypes.number,
 };
 
 export default SummaryItem;

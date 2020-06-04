@@ -35,10 +35,10 @@ const getCategories = (dispatch) => {
 };
 
 const addCategory = (dispatch) => {
-  return async (type, name, estimate) => {
+  return async (type, name) => {
     dispatch({type: `${CategoryActionTypes.ADD_CATEGORY}`});
     try {
-      const category = {type, name, estimate};
+      const category = {type, name};
       const res = await apiClient.post('create-category', {category});
       dispatch({type: `${CategoryActionTypes.ADD_CATEGORY}_SUCCESS`, payload: res.data});
       navigate('CategoryList');

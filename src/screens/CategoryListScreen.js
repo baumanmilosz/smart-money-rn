@@ -7,7 +7,6 @@ import {Context as CategoryContext} from '../context/CategoryContext';
 import TransactionType from '../constans/TransactionType';
 import CategoryItem from '../components/CategoryItem';
 import theme from '../styles/theme';
-import PlaceholderText from '../components/PlaceholderText';
 
 const styles = StyleSheet.create({
   tabBar: {
@@ -42,11 +41,10 @@ const CategoryListScreen = () => {
     <FlatList
       data={categories}
       keyExtractor={(item) => item._id}
-      showsVerticalScrollIndicator={false}
       renderItem={({item}) => {
-        const {type, name, estimate} = item;
+        const {type, name} = item;
         if (type === TransactionType.income) {
-          return <CategoryItem name={name} estimate={estimate} />;
+          return <CategoryItem name={name} />;
         }
         return null;
       }}
@@ -57,11 +55,10 @@ const CategoryListScreen = () => {
     <FlatList
       data={categories}
       keyExtractor={(item) => item._id}
-      showsVerticalScrollIndicator={false}
       renderItem={({item}) => {
-        const {type, name, estimate} = item;
+        const {type, name} = item;
         if (type === TransactionType.expense) {
-          return <CategoryItem name={name} estimate={estimate} />;
+          return <CategoryItem name={name} />;
         }
         return null;
       }}
@@ -80,17 +77,13 @@ const CategoryListScreen = () => {
   return (
     <>
       <CommonHeader text="Category list" />
-      {categories.length === 0 ? (
-        <PlaceholderText text="List is empty" />
-      ) : (
-        <TabView
-          renderTabBar={renderTabBar}
-          navigationState={{index, routes}}
-          renderScene={renderScene}
-          onIndexChange={setIndex}
-          initialLayout={initialLayout}
-        />
-      )}
+      <TabView
+        renderTabBar={renderTabBar}
+        navigationState={{index, routes}}
+        renderScene={renderScene}
+        onIndexChange={setIndex}
+        initialLayout={initialLayout}
+      />
     </>
   );
 };
