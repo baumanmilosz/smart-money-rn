@@ -7,7 +7,7 @@ import CommonHeader from '../components/CommonHeader';
 import CommonFormButton from '../components/CommonFormButton';
 import {Context as TransactionContext} from '../context/TransactionContext';
 import CommonView from '../components/CommonView';
-import TransactionDetailsItem from '../components/TransactionDetailsItem';
+import CommonListItem from '../components/CommonListItem';
 import TransactionDetailsOption from '../constans/TransactionDetailsOption';
 import Loader from '../components/Loader';
 import {navigate} from '../helpers/navigationRef';
@@ -47,11 +47,11 @@ const TransactionDetailsScreen = ({route}) => {
       ) : (
         <CommonView>
           <TransactionDetailsChart />
-          <TransactionDetailsItem value={type} caption={TransactionDetailsOption.TYPE} />
-          <TransactionDetailsItem value={title} caption={TransactionDetailsOption.TITLE} />
-          <TransactionDetailsItem value={category} caption={TransactionDetailsOption.CATEGORY} />
-          <TransactionDetailsItem value={price} caption={TransactionDetailsOption.PRICE} />
-          <TransactionDetailsItem
+          <CommonListItem value={type} caption={TransactionDetailsOption.TYPE} />
+          <CommonListItem value={title} caption={TransactionDetailsOption.TITLE} />
+          <CommonListItem value={category} caption={TransactionDetailsOption.CATEGORY} />
+          <CommonListItem value={price} caption={TransactionDetailsOption.PRICE} />
+          <CommonListItem
             value={moment(date).format('MM/DD/YY')}
             caption={TransactionDetailsOption.DATE}
           />

@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, StyleSheet} from 'react-native';
+import {ScrollView, StyleSheet} from 'react-native';
 import PropTypes from 'prop-types';
 
 const styles = StyleSheet.create({
@@ -10,7 +10,11 @@ const styles = StyleSheet.create({
 });
 
 const CommonView = ({children, style}) => {
-  return <View style={[styles.styledCommonView, style]}>{children}</View>;
+  return (
+    <ScrollView showsVerticalScrollIndicator={false} style={[styles.styledCommonView, style]}>
+      {children}
+    </ScrollView>
+  );
 };
 
 CommonView.defaultProps = {

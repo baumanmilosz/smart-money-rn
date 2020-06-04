@@ -13,19 +13,19 @@ const styles = {
   },
 };
 
-const TransactionDetailsItem = ({caption, value}) => {
+const CommonListItem = ({caption, value}) => {
   return (
     <View style={styles.transactionDetailsItemWrapper}>
       <Caption>{caption}</Caption>
       <Divider />
-      <Text style={styles.itemText}>{value}</Text>
+      <Text style={styles.itemText}>{value} zł</Text>
     </View>
   );
 };
 
-TransactionDetailsItem.propTypes = {
+CommonListItem.propTypes = {
   caption: PropTypes.string.isRequired,
   value: PropTypes.string.isRequired,
 };
 
-export default TransactionDetailsItem;
+export default CommonListItem;
