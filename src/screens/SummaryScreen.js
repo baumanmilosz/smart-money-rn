@@ -10,6 +10,7 @@ import theme from '../styles/theme';
 import SummaryItem from '../components/SummaryItem';
 import SummaryChart from '../components/SummaryChart';
 import {Context as LimitContext} from '../context/LimitContext';
+import {Context as AuthContext} from '../context/AuthContext';
 
 const styles = StyleSheet.create({
   header: {
@@ -35,11 +36,13 @@ const SummaryScreen = () => {
       isLoading,
       plannedExpensesLimit,
       plannedIncomesLimit,
-      actualExpenseLimit,
+      actualExpensesLimit,
       actualIncomesLimit,
     },
     getLimit,
   } = useContext(LimitContext);
+
+  const {getUserInfo} = useContext(AuthContext);
 
   const navigation = useNavigation();
 
@@ -47,6 +50,7 @@ const SummaryScreen = () => {
     navigation.addListener('focus', () => {
       getMonth();
       getLimit();
+      getUserInfo();
     });
   }, []);
   return (
@@ -70,12 +74,13 @@ const SummaryScreen = () => {
           />
           <SummaryItem
             incomeValue={actualIncomesLimit}
-            expenseValue={actualExpenseLimit}
+            expenseValue={actualExpensesLimit}
             incomeCaption="Actual incomes"
             expenseCaption="Actual expenses"
             title="Actual"
+            isActual
           />
-          <SummaryChart actualIncomes={actualIncomesLimit} actualExpenses={actualExpenseLimit} />
+          <SummaryChart actualIncomes={actualIncomesLimit} actualExpenses={actualExpensesLimit} />
         </CommonView>
       )}
     </>

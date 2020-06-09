@@ -22,8 +22,11 @@ const styles = StyleSheet.create({
 });
 
 const SettingsScreen = () => {
-  const [currentMonth, setCurrentMonth] = useState('');
-  const {saveSettings} = useContext(SettingsContext);
+  const {
+    state: {currentMonth},
+    saveSettings,
+  } = useContext(SettingsContext);
+  const [monthName, setMonthName] = useState(currentMonth);
 
   const _renderMonths = () => {
     return MonthNames.map((item, index) => (
@@ -38,13 +41,17 @@ const SettingsScreen = () => {
         <Caption style={styles.captionForm}>What budget month you want to show:</Caption>
         <View style={[styles.input, styles.pickerWrapper]}>
           <Picker
-            selectedValue={currentMonth}
-            onValueChange={(itemValue) => setCurrentMonth(itemValue)}
+            selectedValue={monthName}
+            onValueChange={(itemValue) => setMonthName(itemValue)}
             prompt="Select month">
             {_renderMonths()}
           </Picker>
         </View>
-        <CommonFormButton onSubmit={() => saveSettings(currentMonth)} title="Save" />
+        <CommonFormButton
+          onSubmit={() => saveSettings(currentMonth)}
+          title="Save"
+          isDisabled={currentMonth === monthName}
+        />
       </CommonView>
     </>
   );

@@ -20,7 +20,7 @@ const limitReducer = (state, {type, payload}) => {
         isLoading: false,
         plannedExpensesLimit: payload.plannedExpensesLimit,
         plannedIncomesLimit: payload.plannedIncomesLimit,
-        actualExpenseLimit: payload.actualExpenseLimit,
+        actualExpensesLimit: payload.actualExpensesLimit,
         actualIncomesLimit: payload.actualIncomesLimit,
       };
     case `${LimitActionTypes.GET_LIMIT}_FAILURE`:
@@ -54,7 +54,7 @@ const getLimit = (dispatch) => {
         payload: {
           plannedExpensesLimit: _.get(res.data, 'plannedExpensesLimit', ''),
           plannedIncomesLimit: _.get(res.data, 'plannedIncomesLimit', ''),
-          actualExpenseLimit: _.get(res.data, 'actualExpenseLimit', ''),
+          actualExpensesLimit: _.get(res.data, 'actualExpensesLimit', ''),
           actualIncomesLimit: _.get(res.data, 'actualIncomesLimit', ''),
         },
       });

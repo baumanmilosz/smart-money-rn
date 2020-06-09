@@ -33,7 +33,7 @@ const LimitsScreen = () => {
   const [limitValue, setLimitValue] = useState('');
 
   const {
-    state: {categories},
+    state: {incomeCategories, expenseCategories},
     getCategories,
   } = useContext(CategoryContext);
 
@@ -48,17 +48,13 @@ const LimitsScreen = () => {
 
   const renderCategories = () => {
     if (type === TransactionType.expense) {
-      return categories
-        .filter((item) => item.type === TransactionType.expense)
-        .map((item) => {
-          return <Picker.Item key={item.categoryId} label={item.name} value={item.name} />;
-        });
-    }
-    return categories
-      .filter((item) => item.type === TransactionType.income)
-      .map((item) => {
+      return expenseCategories.map((item) => {
         return <Picker.Item key={item.categoryId} label={item.name} value={item.name} />;
       });
+    }
+    return incomeCategories.map((item) => {
+      return <Picker.Item key={item.categoryId} label={item.name} value={item.name} />;
+    });
   };
 
   return (
@@ -71,7 +67,7 @@ const LimitsScreen = () => {
             selectedValue={category}
             onValueChange={(itemValue) => setCategory(itemValue)}
             prompt="Select category">
-            {categories.length > 0 ? (
+            {expenseCategories.length > 0 && incomeCategories.length > 0 ? (
               renderCategories()
             ) : (
               <Picker.Item value="" label="Select category" color={theme.colors.gray} />

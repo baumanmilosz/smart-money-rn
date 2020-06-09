@@ -4,7 +4,6 @@ import {TabView, SceneMap, TabBar} from 'react-native-tab-view';
 import {useNavigation} from '@react-navigation/native';
 import CommonHeader from '../components/CommonHeader';
 import {Context as CategoryContext} from '../context/CategoryContext';
-import TransactionType from '../constans/TransactionType';
 import CategoryItem from '../components/CategoryItem';
 import theme from '../styles/theme';
 
@@ -26,7 +25,7 @@ const CategoryListScreen = () => {
     {key: 'expense', title: 'Expense'},
   ]);
   const {
-    state: {categories},
+    state: {incomeCategories, expenseCategories},
     getCategories,
   } = useContext(CategoryContext);
 
@@ -39,28 +38,20 @@ const CategoryListScreen = () => {
 
   const IncomeRoute = () => (
     <FlatList
-      data={categories}
+      data={incomeCategories}
       keyExtractor={(item) => item._id}
       renderItem={({item}) => {
-        const {type, name} = item;
-        if (type === TransactionType.income) {
-          return <CategoryItem name={name} />;
-        }
-        return null;
+        return <CategoryItem name={item.name} />;
       }}
     />
   );
 
   const ExpenseRoute = () => (
     <FlatList
-      data={categories}
+      data={expenseCategories}
       keyExtractor={(item) => item._id}
       renderItem={({item}) => {
-        const {type, name} = item;
-        if (type === TransactionType.expense) {
-          return <CategoryItem name={name} />;
-        }
-        return null;
+        return <CategoryItem name={item.name} />;
       }}
     />
   );

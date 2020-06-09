@@ -13,7 +13,7 @@ const AddTransactionScreen = () => {
   } = useContext(TransactionContext);
 
   const {
-    state: {categories},
+    state: {incomeCategories, expenseCategories},
     getCategories,
   } = useContext(CategoryContext);
 
@@ -36,7 +36,8 @@ const AddTransactionScreen = () => {
               addTransaction(type, title, category, price, date)
             }
             submitButtonText="Add transaction"
-            categories={categories}
+            incomeCategories={incomeCategories}
+            expenseCategories={expenseCategories}
           />
         </>
       )}

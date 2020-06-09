@@ -1,6 +1,7 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {View, StyleSheet} from 'react-native';
 import {Caption, RadioButton, TextInput} from 'react-native-paper';
+import {useNavigation} from '@react-navigation/native';
 import theme from '../styles/theme';
 import TransactionType from '../constans/TransactionType';
 import CommonFormButton from './CommonFormButton';
@@ -25,6 +26,13 @@ const CategoryForm = () => {
   const [type, setType] = useState(TransactionType.expense);
   const [name, setName] = useState('');
   const {addCategory} = useContext(CategoryContext);
+  const navigation = useNavigation();
+  useEffect(() => {
+    return () =>
+      navigation.addListener('blur', () => {
+        setName('');
+      });
+  });
 
   return (
     <View style={styles.transactionWrapper}>

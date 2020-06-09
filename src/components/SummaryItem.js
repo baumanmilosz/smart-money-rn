@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import {Subheading} from 'react-native-paper';
 import theme from '../styles/theme';
 import CommonListItem from './CommonListItem';
+import TransactionType from '../constans/TransactionType';
 
 const styles = StyleSheet.create({
   summaryItemWrapper: {
@@ -12,12 +13,29 @@ const styles = StyleSheet.create({
   itemTitle: {textTransform: 'uppercase', color: theme.colors.primary},
 });
 
-const SummaryItem = ({title, incomeCaption, incomeValue, expenseCaption, expenseValue}) => {
+const SummaryItem = ({
+  title,
+  incomeCaption,
+  incomeValue,
+  expenseCaption,
+  expenseValue,
+  isActual,
+}) => {
   return (
     <View style={styles.summaryItemWrapper}>
       <Subheading style={styles.itemTitle}>{title}</Subheading>
-      <CommonListItem caption={incomeCaption} value={incomeValue || '-'} />
-      <CommonListItem caption={expenseCaption} value={expenseValue || '-'} />
+      <CommonListItem
+        caption={incomeCaption}
+        value={incomeValue || '-'}
+        isActual={isActual}
+        type={TransactionType.income}
+      />
+      <CommonListItem
+        caption={expenseCaption}
+        value={expenseValue || '-'}
+        isActual={isActual}
+        type={TransactionType.expense}
+      />
     </View>
   );
 };
@@ -25,6 +43,7 @@ const SummaryItem = ({title, incomeCaption, incomeValue, expenseCaption, expense
 SummaryItem.defaultProps = {
   incomeValue: '',
   expenseValue: '',
+  isActual: false,
 };
 
 SummaryItem.propTypes = {
@@ -33,6 +52,7 @@ SummaryItem.propTypes = {
   expenseCaption: PropTypes.string.isRequired,
   incomeValue: PropTypes.number,
   expenseValue: PropTypes.number,
+  isActual: PropTypes.bool,
 };
 
 export default SummaryItem;

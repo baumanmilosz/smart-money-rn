@@ -27,7 +27,12 @@ const styles = StyleSheet.create({
   },
 });
 
-const TransactionForm = ({submitButtonAction, submitButtonText, categories}) => {
+const TransactionForm = ({
+  submitButtonAction,
+  submitButtonText,
+  incomeCategories,
+  expenseCategories,
+}) => {
   const [type, setType] = useState(TransactionType.expense);
   const [title, setTitle] = useState('');
   const [category, setCategory] = useState(TransactionsCategory.expenses[0].value);
@@ -53,17 +58,13 @@ const TransactionForm = ({submitButtonAction, submitButtonText, categories}) => 
 
   const renderCategories = () => {
     if (type === TransactionType.expense) {
-      return categories
-        .filter((item) => item.type === TransactionType.expense)
-        .map((item) => {
-          return <Picker.Item key={item.categoryId} label={item.name} value={item.name} />;
-        });
-    }
-    return categories
-      .filter((item) => item.type === TransactionType.income)
-      .map((item) => {
-        return <Picker.Item key={item.categoryId} label={item.name} value={item.name} />;
+      return expenseCategories.map((item) => {
+        return <Picker.Item key={item.name} label={item.name} value={item.name} />;
       });
+    }
+    return incomeCategories.map((item) => {
+      return <Picker.Item key={item.name} label={item.name} value={item.name} />;
+    });
   };
 
   const _checkPriceValidation = () => {
@@ -93,14 +94,14 @@ const TransactionForm = ({submitButtonAction, submitButtonText, categories}) => 
             selectedValue={category}
             onValueChange={(itemValue) => setCategory(itemValue)}
             prompt="Select category">
-            {categories.length > 0 ? (
+            {incomeCategories.length > 0 || expenseCategories.length > 0 ? (
               renderCategories()
             ) : (
               <Picker.Item value="" label="Select category" color={theme.colors.gray} />
             )}
           </Picker>
         </View>
-        {categories.length === 0 && (
+        {incomeCategories.length === 0 && expenseCategories.length === 0 && (
           <HelperText type="error" visible>
             Go to &quot;Add category&quot; section and type any category.
           </HelperText>
@@ -161,7 +162,8 @@ const TransactionForm = ({submitButtonAction, submitButtonText, categories}) => 
 TransactionForm.propTypes = {
   submitButtonAction: PropTypes.func.isRequired,
   submitButtonText: PropTypes.string.isRequired,
-  categories: PropTypes.array.isRequired,
+  incomeCategories: PropTypes.array.isRequired,
+  expenseCategories: PropTypes.array.isRequired,
 };
 
 export default TransactionForm;

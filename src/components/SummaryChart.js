@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import {View, StyleSheet, Dimensions} from 'react-native';
 import BarChart from 'react-native-chart-kit/src/bar-chart';
 import {Subheading} from 'react-native-paper';
-import _ from 'lodash';
 import theme from '../styles/theme';
 
 const CHART_WIDTH = Dimensions.get('window').width;
@@ -29,7 +28,7 @@ const SummaryChart = ({actualIncomes, actualExpenses}) => {
     labels: ['Incomes', 'Expenses'],
     datasets: [
       {
-        data: [_.get(actualIncomes, '', 0), _.get(actualExpenses, '', 0)],
+        data: [actualIncomes, actualExpenses],
       },
     ],
   };
@@ -43,15 +42,17 @@ const SummaryChart = ({actualIncomes, actualExpenses}) => {
   return (
     <View style={styles.chartWrapper}>
       <Subheading style={styles.itemTitle}>Statistics</Subheading>
-      <BarChart
-        data={data}
-        width={CHART_WIDTH}
-        height={CHART_HEIGHT}
-        yAxisSuffix="zł"
-        chartConfig={chartConfig}
-        fromZero
-        style={styles.chartStyle}
-      />
+      {actualIncomes && actualExpenses && (
+        <BarChart
+          data={data}
+          width={CHART_WIDTH}
+          height={CHART_HEIGHT}
+          yAxisSuffix="zł"
+          chartConfig={chartConfig}
+          fromZero
+          style={styles.chartStyle}
+        />
+      )}
     </View>
   );
 };
