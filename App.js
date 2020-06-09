@@ -25,6 +25,7 @@ import CategoryListScreen from './src/screens/CategoryListScreen';
 import SummaryScreen from './src/screens/SummaryScreen';
 import SettingsScreen from './src/screens/SettingsScreen';
 import LimitsScreen from './src/screens/LimitsScreen';
+import EditCategoryScreen from './src/screens/EditCategoryScreen';
 
 const Drawer = createDrawerNavigator();
 
@@ -50,6 +51,7 @@ const App = () => {
         <Drawer.Screen name="CategoryList" component={CategoryListScreen} />
         <Drawer.Screen name="Settings" component={SettingsScreen} />
         <Drawer.Screen name="Limits" component={LimitsScreen} />
+        <Drawer.Screen name="EditCategory" component={EditCategoryScreen} />
       </Drawer.Navigator>
     </NavigationContainer>
   );

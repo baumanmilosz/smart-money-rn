@@ -26,14 +26,22 @@ const categoryReducer = (state, {type, payload}) => {
     case `${CategoryActionTypes.DELETE_CATEGORY}`:
       return {
         ...state,
+        isLoading: true,
       };
     case `${CategoryActionTypes.DELETE_CATEGORY}_SUCCESS`:
       return {
         ...state,
         [payload.type]: [...state[payload.type].filter((item) => item.name !== payload.name)],
+        isLoading: false,
       };
     case `${CategoryActionTypes.DELETE_CATEGORY}_FAILURE`:
-      return {...state};
+      return {...state, isLoading: false};
+    case `${CategoryActionTypes.EDIT_CATEGORY}`:
+      return {...state, isLoading: true};
+    case `${CategoryActionTypes.EDIT_CATEGORY}_SUCCESS`:
+      return {...state, isLoading: true};
+    case `${CategoryActionTypes.EDIT_CATEGORY}_FAILURE`:
+      return {...state, isLoading: false};
     default:
       return state;
   }
@@ -72,21 +80,36 @@ const addCategory = (dispatch) => {
 
 const deleteCategory = (dispatch) => {
   return async (name, type) => {
-    dispatch({type: `${CategoryActionTypes.DELETE_CATEGORY}`, payload: name});
+    dispatch({type: `${CategoryActionTypes.DELETE_CATEGORY}`});
     try {
+      await apiClient.delete(`/delete-category/${name}`, {data: {type}});
       dispatch({
         type: `${CategoryActionTypes.DELETE_CATEGORY}_SUCCESS`,
         payload: {name, type},
       });
-      await apiClient.delete(`/delete-category/${name}`, {data: {type}});
     } catch (e) {
       dispatch({type: `${CategoryActionTypes.DELETE_CATEGORY}_FAILURE`});
     }
   };
 };
 
+const editCategory = (dispatch) => {
+  return async (name, type, categoryName) => {
+    dispatch({type: `${CategoryActionTypes.EDIT_CATEGORY}`});
+    try {
+      await apiClient.put(`/edit-category/${categoryName}`, {name, type});
+      dispatch({
+        type: `${CategoryActionTypes.EDIT_CATEGORY}_SUCCESS`,
+      });
+      navigate('CategoryList');
+    } catch (e) {
+      dispatch({type: `${CategoryActionTypes.EDIT_CATEGORY}_FAILURE`});
+    }
+  };
+};
+
 export const {Provider, Context} = createContext(
   categoryReducer,
-  {getCategories, addCategory, deleteCategory},
+  {getCategories, addCategory, deleteCategory, editCategory},
   {income: [], expense: []}
 );

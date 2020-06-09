@@ -42,7 +42,7 @@ const CommonListItem = ({caption, value, isActual, type}) => {
     const percent = `${(actualIncomesLimit / plannedIncomesLimit) * 100}`;
     return (
       <Caption style={renderStyle(percent)}>
-        {Number.isNaN ? `${Math.round(percent)}` : '-'}%
+        {Number.isNaN(percent) ? `${Math.round(percent)}` : '-'}%
       </Caption>
     );
   };

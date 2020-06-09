@@ -7,6 +7,7 @@ import {Context as CategoryContext} from '../context/CategoryContext';
 import CategoryItem from '../components/CategoryItem';
 import theme from '../styles/theme';
 import TransactionType from '../constans/TransactionType';
+import Loader from '../components/Loader';
 
 const styles = StyleSheet.create({
   tabBar: {
@@ -26,7 +27,7 @@ const CategoryListScreen = () => {
     {key: 'expense', title: 'Expense'},
   ]);
   const {
-    state: {income, expense},
+    state: {income, expense, isLoading},
     getCategories,
   } = useContext(CategoryContext);
 
@@ -69,13 +70,17 @@ const CategoryListScreen = () => {
   return (
     <>
       <CommonHeader text="Category list" />
-      <TabView
-        renderTabBar={renderTabBar}
-        navigationState={{index, routes}}
-        renderScene={renderScene}
-        onIndexChange={setIndex}
-        initialLayout={initialLayout}
-      />
+      {isLoading ? (
+        <Loader />
+      ) : (
+        <TabView
+          renderTabBar={renderTabBar}
+          navigationState={{index, routes}}
+          renderScene={renderScene}
+          onIndexChange={setIndex}
+          initialLayout={initialLayout}
+        />
+      )}
     </>
   );
 };

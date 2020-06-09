@@ -49,11 +49,11 @@ const LimitsScreen = () => {
   const renderCategories = () => {
     if (type === TransactionType.expense) {
       return expense.map((item) => {
-        return <Picker.Item key={item.categoryId} label={item.name} value={item.name} />;
+        return <Picker.Item key={item.name} label={item.name} value={item.name} />;
       });
     }
     return income.map((item) => {
-      return <Picker.Item key={item.categoryId} label={item.name} value={item.name} />;
+      return <Picker.Item key={item.name} label={item.name} value={item.name} />;
     });
   };
 

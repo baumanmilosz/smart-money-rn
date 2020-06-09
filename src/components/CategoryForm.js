@@ -1,11 +1,11 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
+import PropTypes from 'prop-types';
 import {View, StyleSheet} from 'react-native';
 import {Caption, RadioButton, TextInput} from 'react-native-paper';
 import {useNavigation} from '@react-navigation/native';
 import theme from '../styles/theme';
 import TransactionType from '../constans/TransactionType';
 import CommonFormButton from './CommonFormButton';
-import {Context as CategoryContext} from '../context/CategoryContext';
 
 const styles = StyleSheet.create({
   transactionWrapper: {
@@ -22,10 +22,9 @@ const styles = StyleSheet.create({
   },
 });
 
-const CategoryForm = () => {
+const CategoryForm = ({submitButtonText, submitButtonAction, isEditForm}) => {
   const [type, setType] = useState(TransactionType.expense);
   const [name, setName] = useState('');
-  const {addCategory} = useContext(CategoryContext);
   const navigation = useNavigation();
   useEffect(() => {
     return () =>
@@ -40,11 +39,19 @@ const CategoryForm = () => {
       <View>
         <RadioButton.Group onValueChange={(value) => setType(value)} value={type}>
           <View style={styles.singleTransactionType}>
-            <RadioButton value={TransactionType.expense} color={theme.colors.primary} />
+            <RadioButton
+              value={TransactionType.expense}
+              color={theme.colors.primary}
+              disabled={isEditForm}
+            />
             <Caption style={{color: theme.colors.primary, fontSize: 13}}>Expense</Caption>
           </View>
           <View style={styles.singleTransactionType}>
-            <RadioButton value={TransactionType.income} color={theme.colors.primary} />
+            <RadioButton
+              value={TransactionType.income}
+              color={theme.colors.primary}
+              disabled={isEditForm}
+            />
             <Caption style={{color: theme.colors.primary, fontSize: 13}}>Income</Caption>
           </View>
         </RadioButton.Group>
@@ -60,9 +67,27 @@ const CategoryForm = () => {
         style={styles.categoryInput}
         returnKeyType="next"
       />
-      <CommonFormButton onSubmit={() => addCategory(type, name)} title="Add category" />
+      <CommonFormButton
+        onSubmit={
+          isEditForm
+            ? (categoryType = undefined, categoryName = undefined) =>
+                submitButtonAction(name, categoryType, categoryName)
+            : () => submitButtonAction(type, name)
+        }
+        title={submitButtonText}
+      />
     </View>
   );
+};
+
+CategoryForm.defaultProps = {
+  isEditForm: false,
+};
+
+CategoryForm.propTypes = {
+  submitButtonText: PropTypes.string.isRequired,
+  submitButtonAction: PropTypes.func.isRequired,
+  isEditForm: PropTypes.bool,
 };
 
 export default CategoryForm;

@@ -36,8 +36,8 @@ const AddTransactionScreen = () => {
               addTransaction(type, title, category, price, date)
             }
             submitButtonText="Add transaction"
-            incomeCategories={income}
-            expenseCategories={expense}
+            income={income}
+            expense={expense}
           />
         </>
       )}
