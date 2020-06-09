@@ -6,6 +6,7 @@ import CommonHeader from '../components/CommonHeader';
 import {Context as CategoryContext} from '../context/CategoryContext';
 import CategoryItem from '../components/CategoryItem';
 import theme from '../styles/theme';
+import TransactionType from '../constans/TransactionType';
 
 const styles = StyleSheet.create({
   tabBar: {
@@ -25,7 +26,7 @@ const CategoryListScreen = () => {
     {key: 'expense', title: 'Expense'},
   ]);
   const {
-    state: {incomeCategories, expenseCategories},
+    state: {income, expense},
     getCategories,
   } = useContext(CategoryContext);
 
@@ -38,20 +39,20 @@ const CategoryListScreen = () => {
 
   const IncomeRoute = () => (
     <FlatList
-      data={incomeCategories}
+      data={income}
       keyExtractor={(item) => item._id}
       renderItem={({item}) => {
-        return <CategoryItem name={item.name} />;
+        return <CategoryItem name={item.name} type={TransactionType.income} />;
       }}
     />
   );
 
   const ExpenseRoute = () => (
     <FlatList
-      data={expenseCategories}
+      data={expense}
       keyExtractor={(item) => item._id}
       renderItem={({item}) => {
-        return <CategoryItem name={item.name} />;
+        return <CategoryItem name={item.name} type={TransactionType.expense} />;
       }}
     />
   );

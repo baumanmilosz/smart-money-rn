@@ -33,10 +33,18 @@ const CommonListItem = ({caption, value, isActual, type}) => {
   const renderUsagePercent = () => {
     if (type === TransactionType.expense) {
       const percent = `${(actualExpensesLimit / plannedExpensesLimit) * 100}`;
-      return <Caption style={renderStyle(percent)}>{Math.round(percent)}%</Caption>;
+      return (
+        <Caption style={renderStyle(percent)}>
+          {Number.isNaN(percent) ? `${Math.round(percent)}` : '-'}%
+        </Caption>
+      );
     }
     const percent = `${(actualIncomesLimit / plannedIncomesLimit) * 100}`;
-    return <Caption style={renderStyle(percent)}>{Math.round(percent)}%</Caption>;
+    return (
+      <Caption style={renderStyle(percent)}>
+        {Number.isNaN ? `${Math.round(percent)}` : '-'}%
+      </Caption>
+    );
   };
 
   return (

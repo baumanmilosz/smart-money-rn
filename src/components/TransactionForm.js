@@ -27,12 +27,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const TransactionForm = ({
-  submitButtonAction,
-  submitButtonText,
-  incomeCategories,
-  expenseCategories,
-}) => {
+const TransactionForm = ({submitButtonAction, submitButtonText, income, expense}) => {
   const [type, setType] = useState(TransactionType.expense);
   const [title, setTitle] = useState('');
   const [category, setCategory] = useState(TransactionsCategory.expenses[0].value);
@@ -58,11 +53,11 @@ const TransactionForm = ({
 
   const renderCategories = () => {
     if (type === TransactionType.expense) {
-      return expenseCategories.map((item) => {
+      return expense.map((item) => {
         return <Picker.Item key={item.name} label={item.name} value={item.name} />;
       });
     }
-    return incomeCategories.map((item) => {
+    return income.map((item) => {
       return <Picker.Item key={item.name} label={item.name} value={item.name} />;
     });
   };
@@ -94,14 +89,14 @@ const TransactionForm = ({
             selectedValue={category}
             onValueChange={(itemValue) => setCategory(itemValue)}
             prompt="Select category">
-            {incomeCategories.length > 0 || expenseCategories.length > 0 ? (
+            {income.length > 0 || expense.length > 0 ? (
               renderCategories()
             ) : (
               <Picker.Item value="" label="Select category" color={theme.colors.gray} />
             )}
           </Picker>
         </View>
-        {incomeCategories.length === 0 && expenseCategories.length === 0 && (
+        {income.length === 0 && expense.length === 0 && (
           <HelperText type="error" visible>
             Go to &quot;Add category&quot; section and type any category.
           </HelperText>
@@ -162,8 +157,8 @@ const TransactionForm = ({
 TransactionForm.propTypes = {
   submitButtonAction: PropTypes.func.isRequired,
   submitButtonText: PropTypes.string.isRequired,
-  incomeCategories: PropTypes.array.isRequired,
-  expenseCategories: PropTypes.array.isRequired,
+  income: PropTypes.array.isRequired,
+  expense: PropTypes.array.isRequired,
 };
 
 export default TransactionForm;
