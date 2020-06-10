@@ -26,7 +26,11 @@ const CommonListItem = ({caption, value, isActual, type}) => {
   } = useContext(LimitContext);
 
   const renderStyle = (percent) => {
-    if (percent > 100) return {color: theme.colors.red};
+    if (
+      (type === TransactionType.expense && percent > 100) ||
+      (type === TransactionType.income && percent < 100)
+    )
+      return {color: theme.colors.red};
     return {color: theme.colors.green};
   };
 

@@ -26,6 +26,7 @@ import SummaryScreen from './src/screens/SummaryScreen';
 import SettingsScreen from './src/screens/SettingsScreen';
 import LimitsScreen from './src/screens/LimitsScreen';
 import EditCategoryScreen from './src/screens/EditCategoryScreen';
+import ConnectionProblemScreen from './src/screens/ConnectionProblemScreen';
 
 const Drawer = createDrawerNavigator();
 
@@ -39,6 +40,7 @@ const App = () => {
         initialRouteName="ResolveAuth"
         drawerContent={(props) => <Navigation {...props} />}>
         <Drawer.Screen name="ResolveAuth" component={ResolveAuthScreen} />
+        <Drawer.Screen name="ConnectionProblem" component={ConnectionProblemScreen} />
         <Drawer.Screen name="Summary" component={SummaryScreen} />
         <Drawer.Screen name="Signup" component={SignupScreen} />
         <Drawer.Screen name="Signin" component={SigninScreen} />

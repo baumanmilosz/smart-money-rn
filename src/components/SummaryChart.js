@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {View, StyleSheet, Dimensions} from 'react-native';
 import BarChart from 'react-native-chart-kit/src/bar-chart';
-import {Subheading} from 'react-native-paper';
+import {Subheading, Caption, Divider} from 'react-native-paper';
 import theme from '../styles/theme';
 
 const CHART_WIDTH = Dimensions.get('window').width;
@@ -15,7 +15,6 @@ const SummaryChart = ({actualIncomes, actualExpenses}) => {
       marginVertical: 10,
     },
     itemTitle: {
-      marginBottom: 15,
       textTransform: 'uppercase',
       color: theme.colors.primary,
     },
@@ -42,6 +41,8 @@ const SummaryChart = ({actualIncomes, actualExpenses}) => {
   return (
     <View style={styles.chartWrapper}>
       <Subheading style={styles.itemTitle}>Statistics</Subheading>
+      <Caption>Actual transactions</Caption>
+      <Divider />
       {actualIncomes && actualExpenses && (
         <BarChart
           data={data}

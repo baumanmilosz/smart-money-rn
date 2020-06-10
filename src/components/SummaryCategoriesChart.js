@@ -6,18 +6,21 @@ import theme from '../styles/theme';
 import Loader from './Loader';
 import {Context as TransactionContext} from '../context/TransactionContext';
 
-const TransactionDetailsChart = () => {
+const CHART_WIDTH = Dimensions.get('window').width;
+const CHART_HEIGHT = 150;
+
+const SummaryCategoriesChart = () => {
   const styles = StyleSheet.create({
     gradientWrapper: {
       borderRadius: 5,
+      marginBottom: 10,
     },
   });
 
-  const gradientColors = [theme.colors.primary, '#3b5998', '#192f6a'];
+  const gradientColors = [theme.colors.primary, theme.colors.secondary];
   const chartConfig = {
-    backgroundColor: '#000000',
-    backgroundGradientFrom: '#1E2923',
-    backgroundGradientTo: '#08130D',
+    backgroundGradientFrom: theme.colors.primary,
+    backgroundGradientTo: theme.colors.white,
     color: (opacity = 1) => `rgba(26, 255, 146, ${opacity})`,
     style: {
       borderRadius: 16,
@@ -53,8 +56,8 @@ const TransactionDetailsChart = () => {
         <LinearGradient colors={gradientColors} style={styles.gradientWrapper}>
           <PieChart
             data={pieChartData}
-            height={150}
-            width={Dimensions.get('window').width}
+            height={CHART_HEIGHT}
+            width={CHART_WIDTH}
             chartConfig={chartConfig}
             accessor="value"
           />
@@ -64,4 +67,4 @@ const TransactionDetailsChart = () => {
   );
 };
 
-export default TransactionDetailsChart;
+export default SummaryCategoriesChart;

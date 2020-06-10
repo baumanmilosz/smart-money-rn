@@ -36,7 +36,13 @@ const authReducer = (state, {type, payload}) => {
     case `${AuthActionTypes.GET_USER_INFO}_SUCCESS`:
       return {...state, email: payload};
     case `${AuthActionTypes.GET_USER_INFO}_FAILURE`:
-      return {...state, payload: ':)'};
+      return {...state};
+    case `${AuthActionTypes.CHECK_CONNECTION}`:
+      return {...state, isButtonLoading: true};
+    case `${AuthActionTypes.CHECK_CONNECTION}_SUCCESS`:
+      return {...state, isButtonLoading: false};
+    case `${AuthActionTypes.CHECK_CONNECTION}_FAILURE`:
+      return {...state, isButtonLoading: false};
     default:
       return state;
   }
@@ -123,8 +129,22 @@ const tryAutoSignIn = (dispatch) => {
   };
 };
 
+const checkConnection = (dispatch) => {
+  return async () => {
+    dispatch({type: AuthActionTypes.CHECK_CONNECTION});
+    try {
+      await apiClient.get('check-connection');
+      dispatch({type: `${AuthActionTypes.CHECK_CONNECTION}_SUCCESS`});
+      return navigate('Summary');
+    } catch (e) {
+      dispatch({type: `${AuthActionTypes.CHECK_CONNECTION}_FAILURE`});
+      return navigate('ConnectionProblem');
+    }
+  };
+};
+
 export const {Provider, Context} = createContext(
   authReducer,
-  {signup, signin, signout, clearErrorMessage, tryAutoSignIn, getUserInfo},
-  {token: null, errorMessage: '', isLoading: false, email: ''}
+  {signup, signin, signout, clearErrorMessage, tryAutoSignIn, getUserInfo, checkConnection},
+  {token: null, errorMessage: '', isLoading: false, email: '', isButtonLoading: false}
 );

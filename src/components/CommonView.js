@@ -1,5 +1,5 @@
-import React from 'react';
-import {ScrollView, StyleSheet} from 'react-native';
+import React, {useState} from 'react';
+import {ScrollView, StyleSheet, RefreshControl} from 'react-native';
 import PropTypes from 'prop-types';
 
 const styles = StyleSheet.create({
@@ -9,9 +9,27 @@ const styles = StyleSheet.create({
   },
 });
 
-const CommonView = ({children, style}) => {
+const CommonView = ({children, style, contentStyle}) => {
+  const [isRefreshing, setRefreshing] = useState(false);
+
+  const wait = (timeout) => {
+    return new Promise((resolve) => {
+      setTimeout(resolve, timeout);
+    });
+  };
+
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+
+    wait(2000).then(() => setRefreshing(false));
+  }, [isRefreshing]);
+
   return (
-    <ScrollView showsVerticalScrollIndicator={false} style={[styles.styledCommonView, style]}>
+    <ScrollView
+      showsVerticalScrollIndicator={false}
+      style={[styles.styledCommonView, style]}
+      contentContainerStyle={contentStyle}
+      refreshControl={<RefreshControl refreshing={isRefreshing} onRefresh={onRefresh} />}>
       {children}
     </ScrollView>
   );
@@ -19,11 +37,13 @@ const CommonView = ({children, style}) => {
 
 CommonView.defaultProps = {
   style: null,
+  contentStyle: null,
 };
 
 CommonView.propTypes = {
   children: PropTypes.object.isRequired,
   style: PropTypes.object,
+  contentStyle: PropTypes.object,
 };
 
 export default CommonView;

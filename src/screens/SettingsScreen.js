@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
 const SettingsScreen = () => {
   const {
     state: {currentMonth},
-    saveSettings,
+    setMonth,
   } = useContext(SettingsContext);
   const [monthName, setMonthName] = useState(currentMonth);
 
@@ -48,7 +48,7 @@ const SettingsScreen = () => {
           </Picker>
         </View>
         <CommonFormButton
-          onSubmit={() => saveSettings(currentMonth)}
+          onSubmit={() => setMonth(monthName)}
           title="Save"
           isDisabled={currentMonth === monthName}
         />

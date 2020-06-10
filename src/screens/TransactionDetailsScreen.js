@@ -11,7 +11,6 @@ import CommonListItem from '../components/CommonListItem';
 import TransactionDetailsOption from '../constans/TransactionDetailsOption';
 import Loader from '../components/Loader';
 import {navigate} from '../helpers/navigationRef';
-import TransactionDetailsChart from '../components/TransactionDetailsChart';
 
 const styles = StyleSheet.create({
   actionButtonsWrapper: {
@@ -46,7 +45,6 @@ const TransactionDetailsScreen = ({route}) => {
         <Loader />
       ) : (
         <CommonView>
-          <TransactionDetailsChart />
           <CommonListItem value={type} caption={TransactionDetailsOption.TYPE} />
           <CommonListItem value={title} caption={TransactionDetailsOption.TITLE} />
           <CommonListItem value={category} caption={TransactionDetailsOption.CATEGORY} />

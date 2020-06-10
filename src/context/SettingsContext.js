@@ -22,7 +22,7 @@ const settingsReducer = (state, {type, payload}) => {
   }
 };
 
-const saveSettings = (dispatch) => {
+const setMonth = (dispatch) => {
   return async (month) => {
     dispatch({type: SettingsActionTypes.SET_MONTH});
     try {
@@ -49,6 +49,6 @@ const getMonth = (dispatch) => {
 
 export const {Provider, Context} = createContext(
   settingsReducer,
-  {saveSettings, getMonth},
+  {setMonth, getMonth},
   {currentMonth: '', errorMessage: '', isLoading: false}
 );
