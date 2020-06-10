@@ -111,5 +111,5 @@ const editCategory = (dispatch) => {
 export const {Provider, Context} = createContext(
   categoryReducer,
   {getCategories, addCategory, deleteCategory, editCategory},
-  {income: [], expense: []}
+  {income: [], expense: [], isLoading: false}
 );

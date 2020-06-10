@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
 
 const SettingsScreen = () => {
   const {
-    state: {currentMonth},
+    state: {currentMonth, isLoading},
     setMonth,
   } = useContext(SettingsContext);
   const [monthName, setMonthName] = useState(currentMonth);
@@ -51,6 +51,7 @@ const SettingsScreen = () => {
           onSubmit={() => setMonth(monthName)}
           title="Save"
           isDisabled={currentMonth === monthName}
+          loading={isLoading}
         />
       </CommonView>
     </>

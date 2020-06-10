@@ -13,6 +13,9 @@ import CommonFormButton from './CommonFormButton';
 import CommonView from './CommonView';
 import TransactionTypeField from './TransactionTypeField';
 
+const MIN_DATE = new Date(2020, 0, 1);
+const MAX_DATE = new Date(2020, 11, 31);
+
 const styles = StyleSheet.create({
   transactionWrapper: {
     padding: 10,
@@ -140,6 +143,8 @@ const TransactionForm = ({submitButtonAction, submitButtonText, income, expense}
             mode="date"
             display="default"
             onChange={onChange}
+            minimumDate={MIN_DATE}
+            maximumDate={MAX_DATE}
           />
         )}
         <CommonFormButton

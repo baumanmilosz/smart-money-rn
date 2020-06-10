@@ -37,6 +37,9 @@ const styles = StyleSheet.create({
   lightModeColor: {
     color: '#000',
   },
+  avatarBackground: {
+    backgroundColor: theme.colors.secondary,
+  },
 });
 
 const Navigation = (props) => {
@@ -57,11 +60,11 @@ const Navigation = (props) => {
           <DrawerContentScrollView {...props}>
             <View>
               <View style={styles.drawerUserDetailsWrapper}>
-                <Avatar.Image
-                  source={{
-                    uri: 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
-                  }}
+                <Avatar.Text
+                  label={email && email[0].toUpperCase()}
                   size={50}
+                  color={theme.colors.white}
+                  style={styles.avatarBackground}
                 />
                 <View style={styles.drawerUserInfoWrapper}>
                   <Title>{email}</Title>
