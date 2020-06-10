@@ -50,8 +50,8 @@ SummaryItem.propTypes = {
   title: PropTypes.string.isRequired,
   incomeCaption: PropTypes.string.isRequired,
   expenseCaption: PropTypes.string.isRequired,
-  incomeValue: PropTypes.number,
-  expenseValue: PropTypes.number,
+  incomeValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  expenseValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   isActual: PropTypes.bool,
 };
 

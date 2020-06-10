@@ -41,7 +41,7 @@ CommonView.defaultProps = {
 };
 
 CommonView.propTypes = {
-  children: PropTypes.object.isRequired,
+  children: PropTypes.oneOfType([PropTypes.object, PropTypes.array]).isRequired,
   style: PropTypes.object,
   contentStyle: PropTypes.object,
 };

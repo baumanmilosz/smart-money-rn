@@ -53,7 +53,7 @@ TransactionListItem.defaultProps = {
 TransactionListItem.propTypes = {
   type: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
-  price: PropTypes.string,
+  price: PropTypes.number,
   category: PropTypes.string.isRequired,
   date: PropTypes.string.isRequired,
   showDetails: PropTypes.func.isRequired,
