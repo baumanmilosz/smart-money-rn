@@ -11,7 +11,6 @@ import SummaryItem from '../components/SummaryItem';
 import SummaryChart from '../components/SummaryChart';
 import {Context as LimitContext} from '../context/LimitContext';
 import {Context as AuthContext} from '../context/AuthContext';
-import SummaryCategoriesChart from '../components/SummaryCategoriesChart';
 
 const styles = StyleSheet.create({
   header: {
@@ -82,7 +81,7 @@ const SummaryScreen = () => {
             isActual
           />
           <SummaryChart actualIncomes={actualIncomesLimit} actualExpenses={actualExpensesLimit} />
-          <SummaryCategoriesChart />
+          {/* <SummaryCategoriesChart /> */}
         </CommonView>
       )}
     </>

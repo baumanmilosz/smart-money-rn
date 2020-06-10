@@ -4,6 +4,7 @@ import {View, StyleSheet, Dimensions} from 'react-native';
 import BarChart from 'react-native-chart-kit/src/bar-chart';
 import {Subheading, Caption, Divider} from 'react-native-paper';
 import theme from '../styles/theme';
+import PlaceholderText from './PlaceholderText';
 
 const CHART_WIDTH = Dimensions.get('window').width;
 const CHART_HEIGHT = 200;
@@ -43,7 +44,7 @@ const SummaryChart = ({actualIncomes, actualExpenses}) => {
       <Subheading style={styles.itemTitle}>Statistics</Subheading>
       <Caption>Actual transactions</Caption>
       <Divider />
-      {actualIncomes && actualExpenses && (
+      {actualIncomes && actualExpenses ? (
         <BarChart
           data={data}
           width={CHART_WIDTH}
@@ -53,6 +54,8 @@ const SummaryChart = ({actualIncomes, actualExpenses}) => {
           fromZero
           style={styles.chartStyle}
         />
+      ) : (
+        <PlaceholderText text="Chart will be generated ;)" />
       )}
     </View>
   );

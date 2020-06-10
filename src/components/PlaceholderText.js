@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
 
 const PlaceholderText = ({text}) => {
   return (
-    <CommonView style={styles.textWrapper}>
+    <CommonView contentStyle={styles.textWrapper}>
       <Text style={styles.styledText}>{text}</Text>
     </CommonView>
   );
