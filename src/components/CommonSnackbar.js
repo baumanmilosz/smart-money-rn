@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import PropTypes from 'prop-types';
-import {View, StyleSheet, Text} from 'react-native';
+import {StyleSheet, Text} from 'react-native';
 import {Snackbar} from 'react-native-paper';
 import theme from '../styles/theme';
 
@@ -14,7 +14,8 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 0,
     left: 0,
-    right: 0,
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   successSnackbar: {
     backgroundColor: theme.colors.green,
@@ -52,11 +53,9 @@ const CommonSnackbar = ({text, variant}) => {
   };
 
   return (
-    <View style={[styles.snackbarWrapper]}>
-      <Snackbar visible={isVisible} style={[styles.snackbarWrapper, renderVariant()]}>
-        <Text>{text}</Text>
-      </Snackbar>
-    </View>
+    <Snackbar visible={isVisible} style={[styles.snackbarWrapper, renderVariant()]}>
+      <Text style={styles.snackbarText}>{text}</Text>
+    </Snackbar>
   );
 };
 

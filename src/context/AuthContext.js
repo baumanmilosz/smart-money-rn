@@ -91,7 +91,7 @@ const signin = (dispatch) => {
     } catch (e) {
       dispatch({
         type: AuthActionTypes.SIGNIN_FAILURE,
-        payload: 'Something went wrong with log in',
+        payload: errorResponse(e),
       });
     }
   };
