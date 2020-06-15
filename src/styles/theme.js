@@ -4,7 +4,7 @@ const theme = {
     secondary: 'rgb(25, 117, 210)',
     black: 'rgb(0, 0, 0)',
     white: 'rgb(255, 255, 255)',
-    red: 'rgb(255, 0, 0)',
+    red: '#B71C1C',
     green: '#0ac778',
     gray: '#999',
   },

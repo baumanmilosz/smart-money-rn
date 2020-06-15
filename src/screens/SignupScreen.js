@@ -4,10 +4,11 @@ import {withTranslation} from 'react-i18next';
 import {Context as AuthContext} from '../context/AuthContext';
 import AuthForm from '../components/AuthForm';
 import Loader from '../components/Loader';
+import CommonSnackbar from '../components/CommonSnackbar';
 
 const SignupScreen = ({t}) => {
   const {
-    state: {isLoading},
+    state: {isLoading, errorMessage},
     signup,
   } = useContext(AuthContext);
 
@@ -24,6 +25,7 @@ const SignupScreen = ({t}) => {
             redirectRouteName="Signin"
             redirectLinkText={t('auth:signup_redirect_link')}
           />
+          {errorMessage ? <CommonSnackbar variant="error" text={errorMessage} /> : null}
         </>
       )}
     </>

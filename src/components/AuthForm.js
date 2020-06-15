@@ -1,10 +1,9 @@
-import React, {useContext, useEffect, useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import PropTypes from 'prop-types';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {TextInput, Title} from 'react-native-paper';
 import {withTranslation} from 'react-i18next';
 import {useNavigation} from '@react-navigation/native';
-import {Context as AuthContext} from '../context/AuthContext';
 import theme from '../styles/theme';
 import {navigate} from '../helpers/navigationRef';
 import LangButtonsMolecule from './LangButtonsMolecule';
@@ -37,9 +36,6 @@ const styles = StyleSheet.create({
 });
 
 const AuthForm = ({onSubmit, authTitle, redirectRouteName, redirectLinkText, submitButton, t}) => {
-  const {
-    state: {errorMessage},
-  } = useContext(AuthContext);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigation = useNavigation();
@@ -79,7 +75,6 @@ const AuthForm = ({onSubmit, authTitle, redirectRouteName, redirectLinkText, sub
         autoCorrect={false}
         secureTextEntry
       />
-      {errorMessage ? <Title style={styles.authFormErrorMessage}>{errorMessage}</Title> : null}
       <CommonFormButton onSubmit={() => onSubmit(email, password)} title={submitButton} />
       <TouchableOpacity onPress={() => navigate(redirectRouteName)}>
         <Text style={styles.styledRedirectLinkText}>{redirectLinkText}</Text>

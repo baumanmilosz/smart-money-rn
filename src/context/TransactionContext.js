@@ -10,7 +10,7 @@ const authReducer = (state, {type, payload}) => {
     case `${TransactionActionTypes.ADD_TRANSACTION}_SUCCESS`:
       return {...state, transaction: payload, isLoading: true};
     case `${TransactionActionTypes.ADD_TRANSACTION}_FAILURE`:
-      return {...state, isLoading: false};
+      return {...state, isLoading: false, errorMessage: payload};
     case `${TransactionActionTypes.GET_TRANSACTION_LIST}`:
       return {...state, isLoading: true};
     case `${TransactionActionTypes.GET_TRANSACTION_LIST}_SUCCESS`:
@@ -135,5 +135,5 @@ export const {Provider, Context} = createContext(
     editTransaction,
     getTransactionDetails,
   },
-  {isLoading: false, transaction: {}, transactionList: [], transactionDetails: {}}
+  {isLoading: false, transaction: {}, transactionList: [], transactionDetails: {}, errorMessage: ''}
 );

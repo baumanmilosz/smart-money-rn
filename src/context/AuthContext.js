@@ -3,6 +3,7 @@ import AuthActionTypes from '../constans/AuthActionTypes';
 import apiClient from '../api/apiClient';
 import createContext from './createContext';
 import {navigate} from '../helpers/navigationRef';
+import errorResponse from '../helpers/errorResponse';
 
 const authReducer = (state, {type, payload}) => {
   switch (type) {
@@ -61,7 +62,7 @@ const signup = (dispatch) => {
     } catch (e) {
       dispatch({
         type: AuthActionTypes.SIGNUP_FAILURE,
-        payload: 'Something went wrong with registration',
+        payload: errorResponse(e),
       });
     }
   };

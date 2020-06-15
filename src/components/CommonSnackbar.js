@@ -1,12 +1,13 @@
 import React, {useEffect, useState} from 'react';
 import PropTypes from 'prop-types';
-import {View, StyleSheet} from 'react-native';
+import {View, StyleSheet, Text} from 'react-native';
 import {Snackbar} from 'react-native-paper';
 import theme from '../styles/theme';
 
 const SUCCESS = 'success';
 const ERROR = 'error';
 const DEFAULT = 'default';
+const VISIBILITY_TIME = 4000;
 
 const styles = StyleSheet.create({
   snackbarWrapper: {
@@ -28,11 +29,13 @@ const styles = StyleSheet.create({
 
 const CommonSnackbar = ({text, variant}) => {
   const [isVisible, setVisible] = useState(true);
+
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setVisible(false);
-    }, 4000);
-    return () => clearTimeout(timer);
+    const timer = setTimeout(() => setVisible(false), VISIBILITY_TIME);
+
+    return () => {
+      clearTimeout(timer);
+    };
   }, []);
 
   const renderVariant = () => {
@@ -51,7 +54,7 @@ const CommonSnackbar = ({text, variant}) => {
   return (
     <View style={[styles.snackbarWrapper]}>
       <Snackbar visible={isVisible} style={[styles.snackbarWrapper, renderVariant()]}>
-        {text}
+        <Text>{text}</Text>
       </Snackbar>
     </View>
   );

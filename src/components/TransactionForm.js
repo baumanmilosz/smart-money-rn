@@ -1,4 +1,4 @@
-import React, {useState, useRef, useEffect} from 'react';
+import React, {useState, useRef, useEffect, useContext} from 'react';
 import PropTypes from 'prop-types';
 import {View, TouchableOpacity, StyleSheet} from 'react-native';
 import {TextInput, HelperText} from 'react-native-paper';
@@ -12,6 +12,8 @@ import TransactionsCategory from '../constans/TransactionsCategory';
 import CommonFormButton from './CommonFormButton';
 import CommonView from './CommonView';
 import TransactionTypeField from './TransactionTypeField';
+import {Context as TransactionContext} from '../context/TransactionContext';
+import CommonSnackbar from './CommonSnackbar';
 
 const MIN_DATE = new Date(2020, 0, 1);
 const MAX_DATE = new Date(2020, 11, 31);
@@ -39,6 +41,9 @@ const TransactionForm = ({submitButtonAction, submitButtonText, income, expense}
   const [show, setShow] = useState(false);
   const priceInputRef = useRef(null);
   const [isPriceError, setPriceError] = useState(false);
+  const {
+    state: {errorMessage},
+  } = useContext(TransactionContext);
 
   const navigation = useNavigation();
   useEffect(() => {
@@ -113,7 +118,6 @@ const TransactionForm = ({submitButtonAction, submitButtonText, income, expense}
           autoCorrect={false}
           style={styles.transactionInput}
           keyboardType="numeric"
-          contextMenuHidden
           returnKeyType="next"
           value={price}
           onChangeText={(value) => setPrice(value)}
@@ -155,6 +159,7 @@ const TransactionForm = ({submitButtonAction, submitButtonText, income, expense}
           isDisabled={!type || !title || !category || !price || !date}
         />
       </View>
+      {errorMessage ? <CommonSnackbar variant="error" text={errorMessage} /> : null}
     </CommonView>
   );
 };

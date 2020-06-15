@@ -4,8 +4,10 @@ import PropTypes from 'prop-types';
 
 const styles = StyleSheet.create({
   styledCommonView: {
-    flex: 1,
     padding: 5,
+  },
+  styledContentStyle: {
+    flex: 1,
   },
 });
 
@@ -28,7 +30,7 @@ const CommonView = ({children, style, contentStyle}) => {
     <ScrollView
       showsVerticalScrollIndicator={false}
       style={[styles.styledCommonView, style]}
-      contentContainerStyle={contentStyle}
+      contentContainerStyle={[styles.styledContentStyle, contentStyle]}
       refreshControl={<RefreshControl refreshing={isRefreshing} onRefresh={onRefresh} />}>
       {children}
     </ScrollView>
