@@ -1,19 +1,16 @@
-import React, {useState, useRef, useEffect, useContext} from 'react';
+import React, {useState, useRef} from 'react';
 import PropTypes from 'prop-types';
 import {View, TouchableOpacity, StyleSheet} from 'react-native';
 import {TextInput, HelperText} from 'react-native-paper';
 import {Picker} from '@react-native-community/picker';
 import moment from 'moment';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import {useNavigation} from '@react-navigation/native';
 import theme from '../styles/theme';
 import TransactionType from '../constans/TransactionType';
 import TransactionsCategory from '../constans/TransactionsCategory';
 import CommonFormButton from './CommonFormButton';
 import CommonView from './CommonView';
 import TransactionTypeField from './TransactionTypeField';
-import {Context as TransactionContext} from '../context/TransactionContext';
-import CommonSnackbar from './CommonSnackbar';
 
 const MIN_DATE = new Date(2020, 0, 1);
 const MAX_DATE = new Date(2020, 11, 31);
@@ -40,17 +37,6 @@ const TransactionForm = ({submitButtonAction, submitButtonText, income, expense}
   const [date, setDate] = useState(new Date());
   const [show, setShow] = useState(false);
   const priceInputRef = useRef(null);
-  const [isPriceError, setPriceError] = useState(false);
-  const {
-    state: {errorMessage},
-  } = useContext(TransactionContext);
-
-  const navigation = useNavigation();
-  useEffect(() => {
-    return () => {
-      navigation.addListener('blur', () => setPriceError(false));
-    };
-  });
 
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
@@ -70,12 +56,6 @@ const TransactionForm = ({submitButtonAction, submitButtonText, income, expense}
     });
   };
 
-  const _checkPriceValidation = () => {
-    const regExp = /^\d+(.\d{1,2})?$/g;
-    const isValid = regExp.test(price);
-    if (!isValid) return setPriceError(true);
-    return setPriceError(false);
-  };
   return (
     <CommonView>
       <View style={styles.transactionWrapper}>
@@ -121,13 +101,7 @@ const TransactionForm = ({submitButtonAction, submitButtonText, income, expense}
           returnKeyType="next"
           value={price}
           onChangeText={(value) => setPrice(value)}
-          onBlur={() => _checkPriceValidation()}
         />
-        {isPriceError && (
-          <HelperText type="error" visible={isPriceError}>
-            Enter price in correct format [XX.XX].
-          </HelperText>
-        )}
         <TouchableOpacity onPress={() => setShow(true)}>
           <TextInput
             label="Date"
@@ -159,7 +133,6 @@ const TransactionForm = ({submitButtonAction, submitButtonText, income, expense}
           isDisabled={!type || !title || !category || !price || !date}
         />
       </View>
-      {errorMessage ? <CommonSnackbar variant="error" text={errorMessage} /> : null}
     </CommonView>
   );
 };

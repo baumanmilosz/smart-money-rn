@@ -2,13 +2,14 @@ import createContext from './createContext';
 import TransactionActionTypes from '../constans/TransactionActionTypes';
 import apiClient from '../api/apiClient';
 import {navigate} from '../helpers/navigationRef';
+import errorResponse from '../helpers/errorResponse';
 
 const authReducer = (state, {type, payload}) => {
   switch (type) {
     case TransactionActionTypes.ADD_TRANSACTION:
       return {...state, transaction: payload, isLoading: true};
     case `${TransactionActionTypes.ADD_TRANSACTION}_SUCCESS`:
-      return {...state, transaction: payload, isLoading: true};
+      return {...state, transaction: payload, isLoading: true, errorMessage: ''};
     case `${TransactionActionTypes.ADD_TRANSACTION}_FAILURE`:
       return {...state, isLoading: false, errorMessage: payload};
     case `${TransactionActionTypes.GET_TRANSACTION_LIST}`:
@@ -56,7 +57,10 @@ const addTransaction = (dispatch) => {
       });
       navigate('TransactionList');
     } catch (e) {
-      dispatch({type: `${TransactionActionTypes.ADD_TRANSACTION}_FAILURE`});
+      dispatch({
+        type: `${TransactionActionTypes.ADD_TRANSACTION}_FAILURE`,
+        payload: errorResponse(e),
+      });
     }
   };
 };
@@ -135,5 +139,11 @@ export const {Provider, Context} = createContext(
     editTransaction,
     getTransactionDetails,
   },
-  {isLoading: false, transaction: {}, transactionList: [], transactionDetails: {}, errorMessage: ''}
+  {
+    isLoading: false,
+    transaction: {},
+    transactionList: [],
+    transactionDetails: {},
+    errorMessage: '',
+  }
 );

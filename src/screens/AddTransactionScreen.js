@@ -5,10 +5,11 @@ import {Context as TransactionContext} from '../context/TransactionContext';
 import {Context as CategoryContext} from '../context/CategoryContext';
 import Loader from '../components/Loader';
 import TransactionForm from '../components/TransactionForm';
+import CommonSnackbar from '../components/CommonSnackbar';
 
 const AddTransactionScreen = () => {
   const {
-    state: {isLoading},
+    state: {isLoading, errorMessage},
     addTransaction,
   } = useContext(TransactionContext);
 
@@ -39,6 +40,7 @@ const AddTransactionScreen = () => {
             income={income}
             expense={expense}
           />
+          {errorMessage ? <CommonSnackbar variant="error" text={errorMessage} /> : null}
         </>
       )}
     </>
