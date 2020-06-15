@@ -12,6 +12,7 @@ import TransactionsCategory from '../constans/TransactionsCategory';
 import {Context as CategoryContext} from '../context/CategoryContext';
 import {Context as LimitContext} from '../context/LimitContext';
 import CommonFormButton from '../components/CommonFormButton';
+import CommonSnackbar from '../components/CommonSnackbar';
 
 const styles = StyleSheet.create({
   transactionWrapper: {
@@ -37,7 +38,10 @@ const LimitsScreen = () => {
     getCategories,
   } = useContext(CategoryContext);
 
-  const {setLimit} = useContext(LimitContext);
+  const {
+    state: {errorMessage, isLoading},
+    setLimit,
+  } = useContext(LimitContext);
 
   const navigation = useNavigation();
   useEffect(() => {
@@ -86,8 +90,13 @@ const LimitsScreen = () => {
           value={limitValue}
           onChangeText={(value) => setLimitValue(value)}
         />
-        <CommonFormButton onSubmit={() => setLimit(type, category, limitValue)} title="Set limit" />
+        <CommonFormButton
+          onSubmit={() => setLimit(type, category, limitValue)}
+          title="Set limit"
+          loading={isLoading}
+        />
       </CommonView>
+      {errorMessage ? <CommonSnackbar variant="error" text={errorMessage} /> : null}
     </>
   );
 };

@@ -9,7 +9,12 @@ const authReducer = (state, {type, payload}) => {
     case TransactionActionTypes.ADD_TRANSACTION:
       return {...state, transaction: payload, isLoading: true};
     case `${TransactionActionTypes.ADD_TRANSACTION}_SUCCESS`:
-      return {...state, transaction: payload, isLoading: true, errorMessage: ''};
+      return {
+        ...state,
+        transaction: payload,
+        isLoading: true,
+        errorMessage: '',
+      };
     case `${TransactionActionTypes.ADD_TRANSACTION}_FAILURE`:
       return {...state, isLoading: false, errorMessage: payload};
     case `${TransactionActionTypes.GET_TRANSACTION_LIST}`:
@@ -31,9 +36,9 @@ const authReducer = (state, {type, payload}) => {
     case TransactionActionTypes.EDIT_TRANSACTION:
       return {...state, isLoading: true};
     case `${TransactionActionTypes.EDIT_TRANSACTION}_SUCCESS`:
-      return {...state, isLoading: true};
+      return {...state, isLoading: true, errorMessage: ''};
     case `${TransactionActionTypes.EDIT_TRANSACTION}_FAILURE`:
-      return {...state, isLoading: false};
+      return {...state, isLoading: false, errorMessage: payload};
     case TransactionActionTypes.GET_TRANSACTION_DETAILS:
       return {...state, isLoading: true};
     case `${TransactionActionTypes.GET_TRANSACTION_DETAILS}_SUCCESS`:
@@ -108,7 +113,10 @@ const editTransaction = (dispatch) => {
       });
       navigate('TransactionList');
     } catch (e) {
-      dispatch({type: `${TransactionActionTypes.EDIT_TRANSACTION}_FAILURE`});
+      dispatch({
+        type: `${TransactionActionTypes.EDIT_TRANSACTION}_FAILURE`,
+        payload: errorResponse(e),
+      });
     }
   };
 };

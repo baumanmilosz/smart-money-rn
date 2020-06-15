@@ -1,4 +1,4 @@
-import React, {useState, useRef} from 'react';
+import React, {useState, useRef, useContext} from 'react';
 import PropTypes from 'prop-types';
 import {View, TouchableOpacity, StyleSheet} from 'react-native';
 import {TextInput, HelperText} from 'react-native-paper';
@@ -11,6 +11,8 @@ import TransactionsCategory from '../constans/TransactionsCategory';
 import CommonFormButton from './CommonFormButton';
 import CommonView from './CommonView';
 import TransactionTypeField from './TransactionTypeField';
+import CommonSnackbar from './CommonSnackbar';
+import {Context as TransactionContext} from '../context/TransactionContext';
 
 const MIN_DATE = new Date(2020, 0, 1);
 const MAX_DATE = new Date(2020, 11, 31);
@@ -29,7 +31,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const TransactionForm = ({submitButtonAction, submitButtonText, income, expense}) => {
+const TransactionForm = ({submitButtonAction, submitButtonText, income, expense, isLoading}) => {
   const [type, setType] = useState(TransactionType.expense);
   const [title, setTitle] = useState('');
   const [category, setCategory] = useState(TransactionsCategory.expenses[0].value);
@@ -37,6 +39,9 @@ const TransactionForm = ({submitButtonAction, submitButtonText, income, expense}
   const [date, setDate] = useState(new Date());
   const [show, setShow] = useState(false);
   const priceInputRef = useRef(null);
+  const {
+    state: {errorMessage},
+  } = useContext(TransactionContext);
 
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
@@ -131,8 +136,10 @@ const TransactionForm = ({submitButtonAction, submitButtonText, income, expense}
           }
           title={submitButtonText}
           isDisabled={!type || !title || !category || !price || !date}
+          loading={isLoading}
         />
       </View>
+      {errorMessage ? <CommonSnackbar variant="error" text={errorMessage} /> : null}
     </CommonView>
   );
 };
@@ -142,6 +149,7 @@ TransactionForm.propTypes = {
   submitButtonText: PropTypes.string.isRequired,
   income: PropTypes.array.isRequired,
   expense: PropTypes.array.isRequired,
+  isLoading: PropTypes.bool.isRequired,
 };
 
 export default TransactionForm;

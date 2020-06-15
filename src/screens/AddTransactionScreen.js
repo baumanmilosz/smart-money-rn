@@ -3,13 +3,11 @@ import {useNavigation} from '@react-navigation/native';
 import CommonHeader from '../components/CommonHeader';
 import {Context as TransactionContext} from '../context/TransactionContext';
 import {Context as CategoryContext} from '../context/CategoryContext';
-import Loader from '../components/Loader';
 import TransactionForm from '../components/TransactionForm';
-import CommonSnackbar from '../components/CommonSnackbar';
 
 const AddTransactionScreen = () => {
   const {
-    state: {isLoading, errorMessage},
+    state: {isLoading},
     addTransaction,
   } = useContext(TransactionContext);
 
@@ -27,22 +25,16 @@ const AddTransactionScreen = () => {
 
   return (
     <>
-      {isLoading ? (
-        <Loader />
-      ) : (
-        <>
-          <CommonHeader text="Add transaction" />
-          <TransactionForm
-            submitButtonAction={(type, title, category, price, date) =>
-              addTransaction(type, title, category, price, date)
-            }
-            submitButtonText="Add transaction"
-            income={income}
-            expense={expense}
-          />
-          {errorMessage ? <CommonSnackbar variant="error" text={errorMessage} /> : null}
-        </>
-      )}
+      <CommonHeader text="Add transaction" />
+      <TransactionForm
+        submitButtonAction={(type, title, category, price, date) =>
+          addTransaction(type, title, category, price, date)
+        }
+        submitButtonText="Add transaction"
+        income={income}
+        expense={expense}
+        isLoading={isLoading}
+      />
     </>
   );
 };

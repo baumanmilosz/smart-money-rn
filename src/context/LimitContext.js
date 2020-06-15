@@ -3,6 +3,7 @@ import createContext from './createContext';
 import LimitActionTypes from '../constans/LimitActionTypes';
 import apiClient from '../api/apiClient';
 import {navigate} from '../helpers/navigationRef';
+import errorResponse from '../helpers/errorResponse';
 
 const limitReducer = (state, {type, payload}) => {
   switch (type) {
@@ -11,7 +12,7 @@ const limitReducer = (state, {type, payload}) => {
     case `${LimitActionTypes.SET_LIMIT}_SUCCESS`:
       return {...state, isLoading: false};
     case `${LimitActionTypes.SET_LIMIT}_FAILURE`:
-      return {...state, isLoading: false};
+      return {...state, isLoading: false, errorMessage: payload};
     case LimitActionTypes.GET_LIMIT:
       return {...state, isLoading: true};
     case `${LimitActionTypes.GET_LIMIT}_SUCCESS`:
@@ -39,7 +40,7 @@ const setLimit = (dispatch) => {
       dispatch({type: `${LimitActionTypes.SET_LIMIT}_SUCCESS`});
       navigate('Summary');
     } catch (e) {
-      dispatch({type: `${LimitActionTypes.SET_LIMIT}_FAILURE`});
+      dispatch({type: `${LimitActionTypes.SET_LIMIT}_FAILURE`, payload: errorResponse(e)});
     }
   };
 };

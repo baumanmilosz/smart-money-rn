@@ -25,6 +25,7 @@ const TransactionListScreen = () => {
       getTransactionList();
     });
   }, []);
+
   return (
     <>
       <View style={styles.transactionListWrapper}>

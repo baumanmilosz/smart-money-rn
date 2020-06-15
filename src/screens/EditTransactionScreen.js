@@ -2,8 +2,8 @@ import React, {useContext} from 'react';
 import PropTypes from 'prop-types';
 import CommonHeader from '../components/CommonHeader';
 import {Context as TransactionContext} from '../context/TransactionContext';
-import Loader from '../components/Loader';
 import TransactionForm from '../components/TransactionForm';
+import {Context as CategoryContext} from '../context/CategoryContext';
 
 const AddTransactionScreen = ({route}) => {
   const {
@@ -11,22 +11,23 @@ const AddTransactionScreen = ({route}) => {
     editTransaction,
   } = useContext(TransactionContext);
 
+  const {
+    state: {income, expense},
+  } = useContext(CategoryContext);
+
   const {_id} = route.params;
   return (
     <>
-      {isLoading ? (
-        <Loader />
-      ) : (
-        <>
-          <CommonHeader text="Edit transaction" />
-          <TransactionForm
-            submitButtonAction={(type, title, category, price, date) =>
-              editTransaction(type, title, category, price, date, _id)
-            }
-            submitButtonText="Edit transaction"
-          />
-        </>
-      )}
+      <CommonHeader text="Edit transaction" />
+      <TransactionForm
+        submitButtonAction={(type, title, category, price, date) =>
+          editTransaction(type, title, category, price, date, _id)
+        }
+        submitButtonText="Edit transaction"
+        income={income}
+        expense={expense}
+        isLoading={isLoading}
+      />
     </>
   );
 };
