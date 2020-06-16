@@ -18,6 +18,9 @@ const styles = {
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
+  styledUsagePercent: {
+    fontWeight: 'bold',
+  },
 };
 
 const CommonListItem = ({caption, value, isActual, type}) => {
@@ -30,32 +33,32 @@ const CommonListItem = ({caption, value, isActual, type}) => {
       (type === TransactionType.expense && percent > 100) ||
       (type === TransactionType.income && percent < 100)
     )
-      return {fontWeight: 'bold', color: theme.colors.red};
-    return {fontWeight: 'bold', color: theme.colors.green};
+      return {color: theme.colors.red};
+    return {color: theme.colors.green};
   };
 
   const renderUsagePercent = () => {
-    if (type === TransactionType.expense) {
-      const percent = `${(actualExpensesLimit / plannedExpensesLimit) * 100}`;
+    if (isActual) {
+      const incomePercent = Math.round((actualIncomesLimit / plannedIncomesLimit) * 100) || '-';
+      const expensePercent = Math.round((actualExpensesLimit / plannedExpensesLimit) * 100) || '-';
       return (
-        <Caption style={renderStyle(percent)}>
-          {!Number.isNaN(Number(percent)) ? `${Math.round(percent)}` : '-'}%
+        <Caption
+          style={[
+            styles.styledUsagePercent,
+            renderStyle(type === TransactionType.income ? incomePercent : expensePercent),
+          ]}>
+          {type === TransactionType.income ? incomePercent : expensePercent}%
         </Caption>
       );
     }
-    const percent = `${(actualIncomesLimit / plannedIncomesLimit) * 100}`;
-    return (
-      <Caption style={renderStyle(percent)}>
-        {!Number.isNaN(Number(percent)) ? `${Math.round(percent)}` : '-'}%
-      </Caption>
-    );
+    return null;
   };
 
   return (
     <View style={styles.transactionDetailsItemWrapper}>
       <View style={styles.captionsWrapper}>
         <Caption>{caption}</Caption>
-        <Caption>{isActual && <Caption>{renderUsagePercent()}</Caption>}</Caption>
+        {renderUsagePercent()}
       </View>
       <Divider />
       <Text style={styles.itemText}>{typeof value === 'number' ? `${value} zł` : value}</Text>
