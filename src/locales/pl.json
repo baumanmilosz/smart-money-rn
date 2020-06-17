@@ -2,8 +2,11 @@
   "auth": {
     "signup_title": "Rejestracja",
     "signin_title": "Logowanie",
+    "first_name": "Imię",
+    "last_name": "Nazwisko",
     "email": "E-mail",
     "password": "Hasło",
+    "confirm_password": "Powtórz hasło",
     "sigup_button": "Założ konto",
     "signin_button": "Zaloguj się",
     "signup_redirect_link": "Masz już konto? Zaloguj się!",

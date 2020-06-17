@@ -13,9 +13,8 @@ import CommonView from './CommonView';
 import TransactionTypeField from './TransactionTypeField';
 import CommonSnackbar from './CommonSnackbar';
 import {Context as TransactionContext} from '../context/TransactionContext';
-
-const MIN_DATE = new Date(2020, 0, 1);
-const MAX_DATE = new Date(2020, 11, 31);
+import {Context as SettingsContext} from '../context/SettingsContext';
+import getCurrentMonth from '../helpers/getCurrentMonth';
 
 const styles = StyleSheet.create({
   transactionWrapper: {
@@ -32,16 +31,25 @@ const styles = StyleSheet.create({
 });
 
 const TransactionForm = ({submitButtonAction, submitButtonText, income, expense, isLoading}) => {
+  const {
+    state: {errorMessage},
+  } = useContext(TransactionContext);
+  const {
+    state: {currentMonth},
+  } = useContext(SettingsContext);
   const [type, setType] = useState(TransactionType.expense);
   const [title, setTitle] = useState('');
   const [category, setCategory] = useState(TransactionsCategory.expenses[0].value);
   const [price, setPrice] = useState('');
-  const [date, setDate] = useState(new Date());
+  const [date, setDate] = useState(
+    new Date(2020, getCurrentMonth(currentMonth), new Date().getDate())
+  );
+
   const [show, setShow] = useState(false);
   const priceInputRef = useRef(null);
-  const {
-    state: {errorMessage},
-  } = useContext(TransactionContext);
+
+  const MIN_DATE = new Date(2020, getCurrentMonth(currentMonth), 1);
+  const MAX_DATE = new Date(2020, getCurrentMonth(currentMonth), 31);
 
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;

@@ -5,12 +5,13 @@ import Icon from 'react-native-vector-icons/Feather';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Entypo from 'react-native-vector-icons/Entypo';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import {Drawer, Avatar, Title, Caption} from 'react-native-paper';
+import {Drawer, Title, Caption} from 'react-native-paper';
 import {navigate} from '../helpers/navigationRef';
 import {Context as NavigationContext} from '../context/NavigationContext';
 import {Context as AuthContext} from '../context/AuthContext';
 import Loader from './Loader';
 import theme from '../styles/theme';
+import UserAvatar from './UserAvatar';
 
 const styles = StyleSheet.create({
   drawerWrapper: {
@@ -37,9 +38,6 @@ const styles = StyleSheet.create({
   lightModeColor: {
     color: '#000',
   },
-  avatarBackground: {
-    backgroundColor: theme.colors.secondary,
-  },
 });
 
 const Navigation = (props) => {
@@ -60,12 +58,7 @@ const Navigation = (props) => {
           <DrawerContentScrollView {...props}>
             <View>
               <View style={styles.drawerUserDetailsWrapper}>
-                <Avatar.Text
-                  label={email && email[0].toUpperCase()}
-                  size={50}
-                  color={theme.colors.white}
-                  style={styles.avatarBackground}
-                />
+                <UserAvatar />
                 <View style={styles.drawerUserInfoWrapper}>
                   <Title>{email}</Title>
                   <Caption>Front-End Developer</Caption>

@@ -50,10 +50,16 @@ const authReducer = (state, {type, payload}) => {
 };
 
 const signup = (dispatch) => {
-  return async (email, password) => {
+  return async (firstName, lastName, email, password, confirmPassword) => {
     dispatch({type: AuthActionTypes.SIGNUP});
     try {
-      const res = await apiClient.post('/signup', {email, password});
+      const res = await apiClient.post('/signup', {
+        firstName,
+        lastName,
+        email,
+        password,
+        confirmPassword,
+      });
       const {token} = res.data;
       await AsyncStorage.setItem('token', token);
       await AsyncStorage.setItem('user', email);
