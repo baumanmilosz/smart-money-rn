@@ -1,20 +1,26 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {ScrollView, StyleSheet, RefreshControl} from 'react-native';
 import PropTypes from 'prop-types';
 import theme from '../styles/theme';
-
-const styles = StyleSheet.create({
-  styledCommonView: {
-    padding: 5,
-    backgroundColor: theme.colors.white,
-  },
-  styledContentStyle: {
-    flex: 1,
-  },
-});
+import {Context as NavigationContext} from '../context/NavigationContext';
 
 const CommonView = ({children, style, contentStyle}) => {
+  const {
+    state: {isDarkMode},
+  } = useContext(NavigationContext);
+  const backgroundColor = isDarkMode ? theme.colors.black : theme.colors.white;
+
   const [isRefreshing, setRefreshing] = useState(false);
+
+  const styles = StyleSheet.create({
+    styledCommonView: {
+      padding: 5,
+      backgroundColor,
+    },
+    styledContentStyle: {
+      flex: 1,
+    },
+  });
 
   const wait = (timeout) => {
     return new Promise((resolve) => {
