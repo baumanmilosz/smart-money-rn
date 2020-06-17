@@ -44,6 +44,12 @@ const authReducer = (state, {type, payload}) => {
       return {...state, isButtonLoading: false};
     case `${AuthActionTypes.CHECK_CONNECTION}_FAILURE`:
       return {...state, isButtonLoading: false};
+    case `${AuthActionTypes.SAVE_USER_INFO}`:
+      return {...state, isLoading: true, success: false, errorMessage: ''};
+    case `${AuthActionTypes.SAVE_USER_INFO}_SUCCESS`:
+      return {...state, isLoading: false, success: true, errorMessage: ''};
+    case `${AuthActionTypes.SAVE_USER_INFO}_FAILURE`:
+      return {...state, isLoading: false, errorMessage: payload};
     default:
       return state;
   }
@@ -81,6 +87,18 @@ const getUserInfo = (dispatch) => {
       dispatch({type: `${AuthActionTypes.GET_USER_INFO}_SUCCESS`, payload: res.data});
     } catch (e) {
       dispatch({type: `${AuthActionTypes.GET_USER_INFO}_FAILURE`});
+    }
+  };
+};
+
+const saveUserInfo = (dispatch) => {
+  return async (firstName, lastName, email, oldEmail) => {
+    dispatch({type: `${AuthActionTypes.SAVE_USER_INFO}`});
+    try {
+      await apiClient.post(`/user-info`, {firstName, lastName, email, oldEmail});
+      dispatch({type: `${AuthActionTypes.SAVE_USER_INFO}_SUCCESS`});
+    } catch (e) {
+      dispatch({type: `${AuthActionTypes.SAVE_USER_INFO}_FAILURE`, payload: errorResponse(e)});
     }
   };
 };
@@ -152,6 +170,22 @@ const checkConnection = (dispatch) => {
 
 export const {Provider, Context} = createContext(
   authReducer,
-  {signup, signin, signout, clearErrorMessage, tryAutoSignIn, getUserInfo, checkConnection},
-  {token: null, errorMessage: '', isLoading: false, userInfo: {}, isButtonLoading: false}
+  {
+    signup,
+    signin,
+    signout,
+    clearErrorMessage,
+    tryAutoSignIn,
+    getUserInfo,
+    saveUserInfo,
+    checkConnection,
+  },
+  {
+    token: null,
+    errorMessage: '',
+    isLoading: false,
+    userInfo: {},
+    isButtonLoading: false,
+    success: false,
+  }
 );

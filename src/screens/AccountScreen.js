@@ -6,6 +6,7 @@ import UserAvatar from '../components/UserAvatar';
 import {Context as AuthContext} from '../context/AuthContext';
 import CommonView from '../components/CommonView';
 import UserForm from '../components/UserForm';
+import CommonSnackbar from '../components/CommonSnackbar';
 
 const styles = StyleSheet.create({
   drawerUserInfoWrapper: {
@@ -20,6 +21,8 @@ const styles = StyleSheet.create({
 const AccountScreen = () => {
   const {
     state: {
+      errorMessage,
+      success,
       userInfo: {firstName, lastName, email},
     },
   } = useContext(AuthContext);
@@ -36,6 +39,8 @@ const AccountScreen = () => {
           </View>
         </View>
       </CommonView>
+      {errorMessage ? <CommonSnackbar variant="error" text={errorMessage} /> : null}
+      {success ? <CommonSnackbar variant="success" text="Saved successfully" /> : null}
     </>
   );
 };

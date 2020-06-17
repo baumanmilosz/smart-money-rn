@@ -3,6 +3,7 @@ import {StyleSheet} from 'react-native';
 import PropTypes from 'prop-types';
 import {TextInput} from 'react-native-paper';
 import {withTranslation} from 'react-i18next';
+import {useNavigation} from '@react-navigation/native';
 import CommonView from './CommonView';
 import theme from '../styles/theme';
 import CommonFormButton from './CommonFormButton';
@@ -18,12 +19,21 @@ const styles = StyleSheet.create({
 const UserForm = ({t}) => {
   const {
     state: {
+      isLoading,
       userInfo: {firstName, lastName, email},
     },
+    saveUserInfo,
+    getUserInfo,
   } = useContext(AuthContext);
   const [newFirstName, setFirstName] = useState(firstName);
   const [newLastName, setLastName] = useState(lastName);
   const [newEmail, setEmail] = useState(email);
+  const navigation = useNavigation();
+  navigation.addListener('blur', () => {
+    setFirstName(firstName);
+    setLastName(lastName);
+    setEmail(email);
+  });
 
   const _checkIfDisable = () => {
     return firstName === newFirstName && lastName === newLastName && email === newEmail;
@@ -65,7 +75,15 @@ const UserForm = ({t}) => {
         autoCorrect={false}
         returnKeyType="next"
       />
-      <CommonFormButton title={t('save')} isDisabled={_checkIfDisable()} />
+      <CommonFormButton
+        title={t('save')}
+        isDisabled={_checkIfDisable()}
+        onSubmit={async () => {
+          await saveUserInfo(newFirstName, newLastName, newEmail, email);
+          getUserInfo();
+        }}
+        loading={isLoading}
+      />
     </CommonView>
   );
 };
