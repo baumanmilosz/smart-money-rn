@@ -13,11 +13,13 @@ const styles = StyleSheet.create({
 
 const UserAvatar = ({size}) => {
   const {
-    state: {email},
+    state: {
+      userInfo: {initials},
+    },
   } = useContext(AuthContext);
   return (
     <Avatar.Text
-      label={email && email[0].toUpperCase()}
+      label={initials || ''}
       size={size || 50}
       color={theme.colors.white}
       style={styles.avatarBackground}

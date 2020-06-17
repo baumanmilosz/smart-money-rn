@@ -1,4 +1,7 @@
 {
+  "common": {
+    "save": "Save"
+  },
   "auth": {
     "signup_title": "Sign Up",
     "signin_title": "Sign In",

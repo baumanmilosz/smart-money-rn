@@ -1,10 +1,12 @@
 import React, {useState} from 'react';
 import {ScrollView, StyleSheet, RefreshControl} from 'react-native';
 import PropTypes from 'prop-types';
+import theme from '../styles/theme';
 
 const styles = StyleSheet.create({
   styledCommonView: {
     padding: 5,
+    backgroundColor: theme.colors.white,
   },
   styledContentStyle: {
     flex: 1,

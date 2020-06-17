@@ -35,7 +35,7 @@ const authReducer = (state, {type, payload}) => {
     case AuthActionTypes.GET_USER_INFO:
       return {...state};
     case `${AuthActionTypes.GET_USER_INFO}_SUCCESS`:
-      return {...state, email: payload};
+      return {...state, userInfo: payload};
     case `${AuthActionTypes.GET_USER_INFO}_FAILURE`:
       return {...state};
     case `${AuthActionTypes.CHECK_CONNECTION}`:
@@ -153,5 +153,5 @@ const checkConnection = (dispatch) => {
 export const {Provider, Context} = createContext(
   authReducer,
   {signup, signin, signout, clearErrorMessage, tryAutoSignIn, getUserInfo, checkConnection},
-  {token: null, errorMessage: '', isLoading: false, email: '', isButtonLoading: false}
+  {token: null, errorMessage: '', isLoading: false, userInfo: {}, isButtonLoading: false}
 );

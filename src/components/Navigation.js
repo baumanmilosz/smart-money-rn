@@ -1,5 +1,5 @@
 import React, {useContext} from 'react';
-import {View, StyleSheet} from 'react-native';
+import {View, StyleSheet, TouchableOpacity} from 'react-native';
 import {DrawerContentScrollView, DrawerItem} from '@react-navigation/drawer';
 import Icon from 'react-native-vector-icons/Feather';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
@@ -42,13 +42,17 @@ const styles = StyleSheet.create({
 
 const Navigation = (props) => {
   const {
-    state: {isLoading, email},
+    state: {
+      isLoading,
+      userInfo: {firstName, lastName, email},
+    },
     signout,
   } = useContext(AuthContext);
   const {
     state: {isDarkMode},
   } = useContext(NavigationContext);
 
+  const fullName = `${firstName} ${lastName}`;
   return (
     <>
       {isLoading ? (
@@ -58,10 +62,12 @@ const Navigation = (props) => {
           <DrawerContentScrollView {...props}>
             <View>
               <View style={styles.drawerUserDetailsWrapper}>
-                <UserAvatar />
+                <TouchableOpacity onPress={() => navigate('Account')}>
+                  <UserAvatar />
+                </TouchableOpacity>
                 <View style={styles.drawerUserInfoWrapper}>
-                  <Title>{email}</Title>
-                  <Caption>Front-End Developer</Caption>
+                  <Title>{fullName}</Title>
+                  <Caption>{email}</Caption>
                 </View>
               </View>
             </View>

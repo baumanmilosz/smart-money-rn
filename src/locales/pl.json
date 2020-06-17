@@ -1,4 +1,7 @@
 {
+  "common": {
+    "save": "Zapisz"
+  },
   "auth": {
     "signup_title": "Rejestracja",
     "signin_title": "Logowanie",

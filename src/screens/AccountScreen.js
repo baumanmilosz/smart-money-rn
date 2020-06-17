@@ -4,28 +4,39 @@ import {Caption, Title} from 'react-native-paper';
 import CommonHeader from '../components/CommonHeader';
 import UserAvatar from '../components/UserAvatar';
 import {Context as AuthContext} from '../context/AuthContext';
+import CommonView from '../components/CommonView';
+import UserForm from '../components/UserForm';
 
 const styles = StyleSheet.create({
   drawerUserInfoWrapper: {
     alignItems: 'center',
     marginTop: 10,
   },
+  userFormWrapper: {
+    alignSelf: 'stretch',
+  },
 });
 
 const AccountScreen = () => {
   const {
-    state: {email},
+    state: {
+      userInfo: {firstName, lastName, email},
+    },
   } = useContext(AuthContext);
   return (
-    <View>
+    <>
       <CommonHeader text="Account" />
-
-      <View style={styles.drawerUserInfoWrapper}>
-        <UserAvatar size={60} />
-        <Title>{email}</Title>
-        <Caption>Front-End Developer</Caption>
-      </View>
-    </View>
+      <CommonView>
+        <View style={styles.drawerUserInfoWrapper}>
+          <UserAvatar size={60} />
+          <Title>{`${firstName} ${lastName}`}</Title>
+          <Caption>{email}</Caption>
+          <View style={styles.userFormWrapper}>
+            <UserForm />
+          </View>
+        </View>
+      </CommonView>
+    </>
   );
 };
 
