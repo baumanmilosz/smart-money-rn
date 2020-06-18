@@ -76,11 +76,16 @@ const CommonListItem = ({caption, value, isActual, type}) => {
   );
 };
 
+CommonListItem.defaultProps = {
+  isActual: false,
+  type: '',
+};
+
 CommonListItem.propTypes = {
   caption: PropTypes.string.isRequired,
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.bool, PropTypes.number]).isRequired,
-  isActual: PropTypes.bool.isRequired,
-  type: PropTypes.string.isRequired,
+  isActual: PropTypes.bool,
+  type: PropTypes.string,
 };
 
 export default CommonListItem;

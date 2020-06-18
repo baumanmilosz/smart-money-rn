@@ -24,6 +24,7 @@ const styles = StyleSheet.create({
 
 const TransactionDetailsScreen = ({route}) => {
   const {_id} = route.params;
+
   const {
     state: {isLoading, transactionDetails},
     removeTransactionListItem,
@@ -34,7 +35,7 @@ const TransactionDetailsScreen = ({route}) => {
     navigation.addListener('focus', () => {
       getTransactionDetails(_id);
     });
-  }, []);
+  }, [_id]);
 
   const {type, title, category, price, date} = transactionDetails;
 
