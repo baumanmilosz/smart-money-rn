@@ -11,28 +11,41 @@ const styles = StyleSheet.create({
   },
 });
 
-const UserAvatar = ({size}) => {
+const UserAvatar = ({size, avatarUri}) => {
   const {
     state: {
       userInfo: {initials},
     },
   } = useContext(AuthContext);
   return (
-    <Avatar.Text
-      label={initials || ''}
-      size={size || 50}
-      color={theme.colors.white}
-      style={styles.avatarBackground}
-    />
+    <>
+      {avatarUri ? (
+        <Avatar.Image
+          source={{
+            uri: avatarUri,
+          }}
+          size={size || 50}
+        />
+      ) : (
+        <Avatar.Text
+          label={initials || ''}
+          size={size || 50}
+          color={theme.colors.white}
+          style={styles.avatarBackground}
+        />
+      )}
+    </>
   );
 };
 
 UserAvatar.defaultProps = {
   size: null,
+  avatarUri: '',
 };
 
 UserAvatar.propTypes = {
   size: PropTypes.number,
+  avatarUri: PropTypes.string,
 };
 
 export default UserAvatar;

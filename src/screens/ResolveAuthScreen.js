@@ -3,8 +3,8 @@ import {Context as AuthContext} from '../context/AuthContext';
 
 const ResolveAuthScreen = () => {
   const {tryAutoSignIn, checkConnection} = useContext(AuthContext);
-  useEffect(() => {
-    checkConnection();
+  useEffect(async () => {
+    await checkConnection();
     tryAutoSignIn();
   }, []);
   return null;

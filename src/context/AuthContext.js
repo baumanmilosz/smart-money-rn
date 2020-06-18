@@ -92,10 +92,10 @@ const getUserInfo = (dispatch) => {
 };
 
 const saveUserInfo = (dispatch) => {
-  return async (firstName, lastName, email, oldEmail) => {
+  return async (firstName, lastName, email, oldEmail, avatarUri) => {
     dispatch({type: `${AuthActionTypes.SAVE_USER_INFO}`});
     try {
-      await apiClient.post(`/user-info`, {firstName, lastName, email, oldEmail});
+      await apiClient.post(`/user-info`, {firstName, lastName, email, oldEmail, avatarUri});
       dispatch({type: `${AuthActionTypes.SAVE_USER_INFO}_SUCCESS`});
     } catch (e) {
       dispatch({type: `${AuthActionTypes.SAVE_USER_INFO}_FAILURE`, payload: errorResponse(e)});

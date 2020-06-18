@@ -19,7 +19,7 @@ const Navigation = (props) => {
   const {
     state: {
       isLoading,
-      userInfo: {firstName, lastName, email},
+      userInfo: {firstName, lastName, email, avatarUri},
     },
     signout,
   } = useContext(AuthContext);
@@ -70,7 +70,7 @@ const Navigation = (props) => {
             <View>
               <View style={styles.drawerUserDetailsWrapper}>
                 <TouchableOpacity onPress={() => navigate('Account')}>
-                  <UserAvatar />
+                  <UserAvatar avatarUri={avatarUri} />
                 </TouchableOpacity>
                 <View style={styles.drawerUserInfoWrapper}>
                   <Title style={{color: fontColor}}>{fullName}</Title>
