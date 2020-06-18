@@ -1,26 +1,35 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import PropTypes from 'prop-types';
 import {View, StyleSheet, Dimensions} from 'react-native';
 import BarChart from 'react-native-chart-kit/src/bar-chart';
-import {Subheading, Caption, Divider} from 'react-native-paper';
+import {Subheading, Caption} from 'react-native-paper';
 import theme from '../styles/theme';
 import PlaceholderText from './PlaceholderText';
+import CommonDivider from './CommonDivider';
+import {Context as NavigationContext} from '../context/NavigationContext';
 
 const CHART_WIDTH = Dimensions.get('window').width;
 const CHART_HEIGHT = 200;
 const DECIMAL_PLACES = 2;
 
 const SummaryChart = ({actualIncomes, actualExpenses}) => {
+  const {
+    state: {isDarkMode},
+  } = useContext(NavigationContext);
   const styles = StyleSheet.create({
     chartWrapper: {
       marginVertical: 10,
     },
     itemTitle: {
       textTransform: 'uppercase',
-      color: theme.colors.primary,
+      color: isDarkMode ? theme.dark.fontPrimary : theme.colors.primary,
     },
     chartStyle: {
+      marginTop: 10,
       borderRadius: 5,
+    },
+    styledStatsCaption: {
+      color: theme.colors.captionColor,
     },
   });
 
@@ -42,9 +51,9 @@ const SummaryChart = ({actualIncomes, actualExpenses}) => {
   return (
     <View style={styles.chartWrapper}>
       <Subheading style={styles.itemTitle}>Statistics</Subheading>
-      <Caption>Actual transactions</Caption>
-      <Divider />
-      {actualIncomes && actualExpenses ? (
+      <Caption style={styles.styledStatsCaption}>Actual transactions</Caption>
+      <CommonDivider />
+      {actualIncomes || actualExpenses ? (
         <BarChart
           data={data}
           width={CHART_WIDTH}

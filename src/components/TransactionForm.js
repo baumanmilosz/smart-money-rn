@@ -15,6 +15,7 @@ import CommonSnackbar from './CommonSnackbar';
 import {Context as TransactionContext} from '../context/TransactionContext';
 import {Context as SettingsContext} from '../context/SettingsContext';
 import getCurrentMonth from '../helpers/getCurrentMonth';
+import {Context as NavigationContext} from '../context/NavigationContext';
 
 const styles = StyleSheet.create({
   transactionWrapper: {
@@ -37,6 +38,9 @@ const TransactionForm = ({submitButtonAction, submitButtonText, income, expense,
   const {
     state: {currentMonth},
   } = useContext(SettingsContext);
+  const {
+    state: {isDarkMode},
+  } = useContext(NavigationContext);
   const [type, setType] = useState(TransactionType.expense);
   const [title, setTitle] = useState('');
   const [category, setCategory] = useState(TransactionsCategory.expenses[0].value);
@@ -72,7 +76,7 @@ const TransactionForm = ({submitButtonAction, submitButtonText, income, expense,
   return (
     <CommonView>
       <View style={styles.transactionWrapper}>
-        <TransactionTypeField type={type} setType={setType} />
+        <TransactionTypeField type={type} setType={setType} isDarkMode={isDarkMode} />
         <TextInput
           label="Title"
           value={title}

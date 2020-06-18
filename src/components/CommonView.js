@@ -8,17 +8,14 @@ const CommonView = ({children, style, contentStyle}) => {
   const {
     state: {isDarkMode},
   } = useContext(NavigationContext);
-  const backgroundColor = isDarkMode ? theme.colors.black : theme.colors.white;
 
   const [isRefreshing, setRefreshing] = useState(false);
 
   const styles = StyleSheet.create({
     styledCommonView: {
-      padding: 5,
-      backgroundColor,
-    },
-    styledContentStyle: {
       flex: 1,
+      padding: 5,
+      backgroundColor: isDarkMode ? theme.dark.backgroundPrimary : theme.colors.white,
     },
   });
 
@@ -38,7 +35,7 @@ const CommonView = ({children, style, contentStyle}) => {
     <ScrollView
       showsVerticalScrollIndicator={false}
       style={[styles.styledCommonView, style]}
-      contentContainerStyle={[styles.styledContentStyle, contentStyle]}
+      contentContainerStyle={contentStyle}
       refreshControl={<RefreshControl refreshing={isRefreshing} onRefresh={onRefresh} />}>
       {children}
     </ScrollView>

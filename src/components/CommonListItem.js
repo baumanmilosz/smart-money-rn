@@ -1,34 +1,44 @@
 import React, {useContext} from 'react';
 import PropTypes from 'prop-types';
 import {Text, View} from 'react-native';
-import {Caption, Divider} from 'react-native-paper';
+import {Caption} from 'react-native-paper';
 import {Context as LimitContext} from '../context/LimitContext';
 import TransactionType from '../constans/TransactionType';
 import theme from '../styles/theme';
-
-const styles = {
-  transactionDetailsItemWrapper: {
-    padding: 5,
-  },
-  itemText: {
-    marginTop: 5,
-    fontSize: 16,
-  },
-  captionsWrapper: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  styledUsagePercent: {
-    fontWeight: 'bold',
-  },
-};
+import {Context as NavigationContext} from '../context/NavigationContext';
+import CommonDivider from './CommonDivider';
 
 const CommonListItem = ({caption, value, isActual, type}) => {
   const {
     state: {plannedIncomesLimit, plannedExpensesLimit, actualIncomesLimit, actualExpensesLimit},
   } = useContext(LimitContext);
 
-  const renderStyle = (percent) => {
+  const {
+    state: {isDarkMode},
+  } = useContext(NavigationContext);
+
+  const styles = {
+    transactionDetailsItemWrapper: {
+      padding: 5,
+    },
+    itemText: {
+      marginTop: 5,
+      fontSize: 16,
+      color: isDarkMode ? theme.dark.fontPrimary : theme.colors.black,
+    },
+    captionsWrapper: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+    },
+    styledUsagePercent: {
+      fontWeight: 'bold',
+    },
+    listItemCaption: {
+      color: theme.colors.captionColor,
+    },
+  };
+
+  const _renderStyle = (percent) => {
     if (
       (type === TransactionType.expense && percent > 100) ||
       (type === TransactionType.income && percent < 100)
@@ -37,7 +47,7 @@ const CommonListItem = ({caption, value, isActual, type}) => {
     return {color: theme.colors.green};
   };
 
-  const renderUsagePercent = () => {
+  const _renderUsagePercent = () => {
     if (isActual) {
       const incomePercent = Math.round((actualIncomesLimit / plannedIncomesLimit) * 100) || '-';
       const expensePercent = Math.round((actualExpensesLimit / plannedExpensesLimit) * 100) || '-';
@@ -45,7 +55,7 @@ const CommonListItem = ({caption, value, isActual, type}) => {
         <Caption
           style={[
             styles.styledUsagePercent,
-            renderStyle(type === TransactionType.income ? incomePercent : expensePercent),
+            _renderStyle(type === TransactionType.income ? incomePercent : expensePercent),
           ]}>
           {type === TransactionType.income ? incomePercent : expensePercent}%
         </Caption>
@@ -57,10 +67,10 @@ const CommonListItem = ({caption, value, isActual, type}) => {
   return (
     <View style={styles.transactionDetailsItemWrapper}>
       <View style={styles.captionsWrapper}>
-        <Caption>{caption}</Caption>
-        {renderUsagePercent()}
+        <Caption style={styles.listItemCaption}>{caption}</Caption>
+        {_renderUsagePercent()}
       </View>
-      <Divider />
+      <CommonDivider />
       <Text style={styles.itemText}>{typeof value === 'number' ? `${value} zł` : value}</Text>
     </View>
   );

@@ -1,17 +1,11 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {StyleSheet, View} from 'react-native';
 import PropTypes from 'prop-types';
 import {Subheading} from 'react-native-paper';
 import theme from '../styles/theme';
 import CommonListItem from './CommonListItem';
 import TransactionType from '../constans/TransactionType';
-
-const styles = StyleSheet.create({
-  summaryItemWrapper: {
-    marginVertical: 10,
-  },
-  itemTitle: {textTransform: 'uppercase', color: theme.colors.primary},
-});
+import {Context as NavigationContext} from '../context/NavigationContext';
 
 const SummaryItem = ({
   title,
@@ -21,6 +15,18 @@ const SummaryItem = ({
   expenseValue,
   isActual,
 }) => {
+  const {
+    state: {isDarkMode},
+  } = useContext(NavigationContext);
+  const styles = StyleSheet.create({
+    summaryItemWrapper: {
+      marginVertical: 10,
+    },
+    itemTitle: {
+      textTransform: 'uppercase',
+      color: isDarkMode ? theme.dark.fontPrimary : theme.colors.primary,
+    },
+  });
   return (
     <View style={styles.summaryItemWrapper}>
       <Subheading style={styles.itemTitle}>{title}</Subheading>

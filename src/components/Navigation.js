@@ -5,13 +5,15 @@ import Feather from 'react-native-vector-icons/Feather';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Entypo from 'react-native-vector-icons/Entypo';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import {Drawer, Title, Caption, Switch} from 'react-native-paper';
+import {Title, Caption, Switch} from 'react-native-paper';
 import {navigate} from '../helpers/navigationRef';
 import {Context as NavigationContext} from '../context/NavigationContext';
 import {Context as AuthContext} from '../context/AuthContext';
 import Loader from './Loader';
 import theme from '../styles/theme';
 import UserAvatar from './UserAvatar';
+import CommonNavSectionTitle from './CommonNavSectionTitle';
+import CommonDivider from './CommonDivider';
 
 const Navigation = (props) => {
   const {
@@ -27,12 +29,12 @@ const Navigation = (props) => {
   } = useContext(NavigationContext);
 
   const fullName = `${firstName} ${lastName}`;
-  const fontColor = isDarkMode ? theme.colors.white : theme.colors.black;
+  const fontColor = isDarkMode ? theme.dark.fontPrimary : theme.colors.black;
   const styles = StyleSheet.create({
     drawerWrapper: {
       flex: 1,
       padding: 10,
-      backgroundColor: isDarkMode ? theme.colors.black : theme.colors.white,
+      backgroundColor: isDarkMode ? theme.dark.backgroundPrimary : theme.colors.white,
     },
     drawerUserDetailsWrapper: {
       flexDirection: 'row',
@@ -56,9 +58,6 @@ const Navigation = (props) => {
       alignItems: 'center',
       justifyContent: 'space-between',
     },
-    drawerSectionTitle: {
-      color: 'red',
-    },
   });
 
   return (
@@ -79,62 +78,63 @@ const Navigation = (props) => {
                 </View>
               </View>
             </View>
-            <Drawer.Section title="Overview" labelStyle={{color: 'red'}}>
-              <DrawerItem
-                icon={() => <FontAwesome name="wpforms" size={24} color={fontColor} />}
-                label="Summary"
-                onPress={() => navigate('Summary')}
-                labelStyle={{color: fontColor}}
-              />
-              <DrawerItem
-                icon={() => <MaterialCommunityIcons name="bank-plus" size={24} color={fontColor} />}
-                label="Add Transaction"
-                onPress={() => navigate('AddTransaction')}
-                labelStyle={{color: fontColor}}
-              />
-              <DrawerItem
-                icon={() => <Entypo name="list" size={24} color={fontColor} />}
-                label="Transaction List"
-                onPress={() => navigate('TransactionList')}
-                labelStyle={{color: fontColor}}
-              />
-              <DrawerItem
-                icon={() => (
-                  <MaterialCommunityIcons name="database-plus" size={24} color={fontColor} />
-                )}
-                label="Add Category"
-                onPress={() => navigate('AddCategory')}
-                labelStyle={{color: fontColor}}
-              />
-              <DrawerItem
-                icon={() => (
-                  <MaterialCommunityIcons name="table-column" size={24} color={fontColor} />
-                )}
-                label="Category List"
-                onPress={() => navigate('CategoryList')}
-                labelStyle={{color: fontColor}}
-              />
-              <DrawerItem
-                icon={() => <Entypo name="progress-two" size={24} color={fontColor} />}
-                label="Limits"
-                onPress={() => navigate('Limits')}
-                labelStyle={{color: fontColor}}
-              />
-            </Drawer.Section>
-            <Drawer.Section title="Others">
-              <DrawerItem
-                icon={() => <Feather name="user" size={24} color={fontColor} />}
-                label="Account"
-                onPress={() => navigate('Account')}
-                labelStyle={{color: fontColor}}
-              />
-              <DrawerItem
-                icon={() => <Feather name="settings" size={24} color={fontColor} />}
-                label="Settings"
-                onPress={() => navigate('Settings')}
-                labelStyle={{color: fontColor}}
-              />
-            </Drawer.Section>
+
+            <CommonNavSectionTitle title="Overview" />
+            <DrawerItem
+              icon={() => <FontAwesome name="wpforms" size={24} color={fontColor} />}
+              label="Summary"
+              onPress={() => navigate('Summary')}
+              labelStyle={{color: fontColor}}
+            />
+            <DrawerItem
+              icon={() => <MaterialCommunityIcons name="bank-plus" size={24} color={fontColor} />}
+              label="Add Transaction"
+              onPress={() => navigate('AddTransaction')}
+              labelStyle={{color: fontColor}}
+            />
+            <DrawerItem
+              icon={() => <Entypo name="list" size={24} color={fontColor} />}
+              label="Transaction List"
+              onPress={() => navigate('TransactionList')}
+              labelStyle={{color: fontColor}}
+            />
+            <DrawerItem
+              icon={() => (
+                <MaterialCommunityIcons name="database-plus" size={24} color={fontColor} />
+              )}
+              label="Add Category"
+              onPress={() => navigate('AddCategory')}
+              labelStyle={{color: fontColor}}
+            />
+            <DrawerItem
+              icon={() => (
+                <MaterialCommunityIcons name="table-column" size={24} color={fontColor} />
+              )}
+              label="Category List"
+              onPress={() => navigate('CategoryList')}
+              labelStyle={{color: fontColor}}
+            />
+            <DrawerItem
+              icon={() => <Entypo name="progress-two" size={24} color={fontColor} />}
+              label="Limits"
+              onPress={() => navigate('Limits')}
+              labelStyle={{color: fontColor}}
+            />
+            <CommonDivider />
+            <CommonNavSectionTitle title="Others" />
+            <DrawerItem
+              icon={() => <Feather name="user" size={24} color={fontColor} />}
+              label="Account"
+              onPress={() => navigate('Account')}
+              labelStyle={{color: fontColor}}
+            />
+            <DrawerItem
+              icon={() => <Feather name="settings" size={24} color={fontColor} />}
+              label="Settings"
+              onPress={() => navigate('Settings')}
+              labelStyle={{color: fontColor}}
+            />
+            <CommonDivider />
           </DrawerContentScrollView>
           <View style={styles.navFooterWrapper}>
             <DrawerItem
