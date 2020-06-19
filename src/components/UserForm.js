@@ -1,5 +1,5 @@
 import React, {useContext, useState} from 'react';
-import {StyleSheet, TouchableOpacity, View} from 'react-native';
+import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import PropTypes from 'prop-types';
 import {Caption, TextInput, Title} from 'react-native-paper';
 import {withTranslation} from 'react-i18next';
@@ -30,6 +30,7 @@ const UserForm = ({t}) => {
     },
     saveUserInfo,
     getUserInfo,
+    resetPassword,
   } = useContext(AuthContext);
   const [newFirstName, setFirstName] = useState(firstName);
   const [newLastName, setLastName] = useState(lastName);
@@ -117,6 +118,9 @@ const UserForm = ({t}) => {
         }}
         loading={isLoading}
       />
+      <TouchableOpacity onPress={() => resetPassword(email)}>
+        <Text style={styles.styledRedirectLinkText}>Forgot password? Reset!</Text>
+      </TouchableOpacity>
     </CommonView>
   );
 };

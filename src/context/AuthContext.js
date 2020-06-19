@@ -168,6 +168,17 @@ const checkConnection = (dispatch) => {
   };
 };
 
+const resetPassword = () => {
+  return async (email) => {
+    try {
+      await apiClient.post('reset-password', {email});
+    } catch (e) {
+      /*eslint-disable*/
+      console.log(e);
+    }
+  };
+};
+
 export const {Provider, Context} = createContext(
   authReducer,
   {
@@ -179,6 +190,7 @@ export const {Provider, Context} = createContext(
     getUserInfo,
     saveUserInfo,
     checkConnection,
+    resetPassword,
   },
   {
     token: null,
@@ -187,5 +199,5 @@ export const {Provider, Context} = createContext(
     userInfo: {},
     isButtonLoading: false,
     success: false,
-  }
+  },
 );
