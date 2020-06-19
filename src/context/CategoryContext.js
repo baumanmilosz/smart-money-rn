@@ -3,6 +3,7 @@ import CategoryActionTypes from '../constans/CategoryActionTypes';
 import createContext from './createContext';
 import apiClient from '../api/apiClient';
 import {navigate} from '../helpers/navigationRef';
+import errorResponse from '../helpers/errorResponse';
 
 const categoryReducer = (state, {type, payload}) => {
   switch (type) {
@@ -18,11 +19,11 @@ const categoryReducer = (state, {type, payload}) => {
     case `${CategoryActionTypes.GET_CATEGORIES}_FAILURE`:
       return {...state, isLoading: false};
     case CategoryActionTypes.ADD_CATEGORY:
-      return {...state, isLoading: true};
+      return {...state, isLoading: true, errorMessage: ''};
     case `${CategoryActionTypes.ADD_CATEGORY}_SUCCESS`:
-      return {...state, isLoading: false};
+      return {...state, isLoading: false, errorMessage: ''};
     case `${CategoryActionTypes.ADD_CATEGORY}_FAILURE`:
-      return {...state, isLoading: false};
+      return {...state, isLoading: false, errorMessage: payload};
     case `${CategoryActionTypes.DELETE_CATEGORY}`:
       return {
         ...state,
@@ -73,7 +74,11 @@ const addCategory = (dispatch) => {
       dispatch({type: `${CategoryActionTypes.ADD_CATEGORY}_SUCCESS`, payload: res.data});
       navigate('CategoryList');
     } catch (e) {
-      dispatch({type: `${CategoryActionTypes.ADD_CATEGORY}_FAILURE`});
+      const categoryExistsError = get(e, 'response.data.errors[0].message');
+      dispatch({
+        type: `${CategoryActionTypes.ADD_CATEGORY}_FAILURE`,
+        payload: categoryExistsError || errorResponse(e),
+      });
     }
   };
 };
@@ -111,5 +116,5 @@ const editCategory = (dispatch) => {
 export const {Provider, Context} = createContext(
   categoryReducer,
   {getCategories, addCategory, deleteCategory, editCategory},
-  {income: [], expense: [], isLoading: false}
+  {income: [], expense: [], isLoading: false, errorMessage: ''}
 );

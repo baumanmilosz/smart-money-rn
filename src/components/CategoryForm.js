@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import PropTypes from 'prop-types';
 import {View, StyleSheet} from 'react-native';
 import {Caption, RadioButton, TextInput} from 'react-native-paper';
@@ -6,6 +6,7 @@ import {useNavigation} from '@react-navigation/native';
 import theme from '../styles/theme';
 import TransactionType from '../constans/TransactionType';
 import CommonFormButton from './CommonFormButton';
+import {Context as CategoryContext} from '../context/CategoryContext';
 
 const styles = StyleSheet.create({
   transactionWrapper: {
@@ -25,6 +26,9 @@ const styles = StyleSheet.create({
 const CategoryForm = ({submitButtonText, submitButtonAction, isEditForm}) => {
   const [type, setType] = useState(TransactionType.expense);
   const [name, setName] = useState('');
+  const {
+    state: {isLoading},
+  } = useContext(CategoryContext);
   const navigation = useNavigation();
   useEffect(() => {
     return () =>
@@ -75,6 +79,7 @@ const CategoryForm = ({submitButtonText, submitButtonAction, isEditForm}) => {
             : () => submitButtonAction(type, name)
         }
         title={submitButtonText}
+        loading={isLoading}
       />
     </View>
   );
