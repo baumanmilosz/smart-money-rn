@@ -21,7 +21,7 @@ const AddTransactionScreen = () => {
     navigation.addListener('focus', () => {
       getCategories();
     });
-  }, []);
+  }, [navigation]);
 
   return (
     <>

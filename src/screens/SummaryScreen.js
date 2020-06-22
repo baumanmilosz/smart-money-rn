@@ -40,7 +40,7 @@ const SummaryScreen = () => {
       getLimit();
       getUserInfo();
     });
-  }, []);
+  }, [navigation]);
   const styles = StyleSheet.create({
     header: {
       alignItems: 'center',

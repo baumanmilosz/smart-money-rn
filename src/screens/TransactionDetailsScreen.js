@@ -35,7 +35,7 @@ const TransactionDetailsScreen = ({route}) => {
     navigation.addListener('focus', () => {
       getTransactionDetails(_id);
     });
-  }, [_id]);
+  }, [navigation, _id]);
 
   const {type, title, category, price, date} = transactionDetails;
 

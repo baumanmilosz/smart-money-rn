@@ -36,7 +36,7 @@ const CategoryListScreen = () => {
     navigation.addListener('focus', () => {
       getCategories();
     });
-  }, []);
+  }, [navigation]);
 
   const IncomeRoute = () => (
     <FlatList

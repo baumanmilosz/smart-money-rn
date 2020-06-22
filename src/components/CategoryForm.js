@@ -35,7 +35,7 @@ const CategoryForm = ({submitButtonText, submitButtonAction, isEditForm}) => {
       navigation.addListener('blur', () => {
         setName('');
       });
-  });
+  }, [navigation]);
 
   return (
     <View style={styles.transactionWrapper}>

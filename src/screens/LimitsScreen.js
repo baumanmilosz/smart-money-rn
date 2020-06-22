@@ -48,7 +48,7 @@ const LimitsScreen = () => {
     navigation.addListener('focus', () => {
       getCategories();
     });
-  }, []);
+  }, [navigation]);
 
   const renderCategories = () => {
     if (type === TransactionType.expense) {

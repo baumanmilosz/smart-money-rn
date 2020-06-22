@@ -24,7 +24,7 @@ const TransactionListScreen = () => {
     navigation.addListener('focus', () => {
       getTransactionList();
     });
-  }, []);
+  }, [navigation]);
 
   return (
     <>
