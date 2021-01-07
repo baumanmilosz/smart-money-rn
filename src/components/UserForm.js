@@ -41,7 +41,7 @@ const UserForm = ({t}) => {
     setLastName(lastName);
     setEmail(email);
   });
-  const [avatar: avatarUri, setAvatartUri] = useState('');
+  const [userAvatar, setAvatartUri] = useState('');
 
   const _getAvatar = async () => {
     try {
@@ -51,7 +51,7 @@ const UserForm = ({t}) => {
         height: 300,
         cropping: true,
       });
-      setAvatartUri(image.path);
+      setAvatartUri(image);
     } catch (e) {
       throw new Error(e);
     }
@@ -62,7 +62,7 @@ const UserForm = ({t}) => {
       firstName === newFirstName &&
       lastName === newLastName &&
       email === newEmail &&
-      avatar === avatarUri
+      userAvatar === avatarUri
     );
   };
 
@@ -70,7 +70,7 @@ const UserForm = ({t}) => {
     <CommonView>
       <View style={styles.userInfoWrapper}>
         <TouchableOpacity onPress={_getAvatar}>
-          <UserAvatar size={60} avatarUri={avatar || avatarUri} />
+          <UserAvatar size={60} />
         </TouchableOpacity>
         <Title>{`${firstName} ${lastName}`}</Title>
         <Caption>{email}</Caption>
@@ -112,8 +112,8 @@ const UserForm = ({t}) => {
       <CommonFormButton
         title={t('save')}
         isDisabled={_checkIfDisable()}
-        onSubmit={async () => {
-          await saveUserInfo(newFirstName, newLastName, newEmail, email, avatar);
+        onSubmit={() => {
+          saveUserInfo(newFirstName, newLastName, newEmail, email, userAvatar);
           getUserInfo();
         }}
         loading={isLoading}

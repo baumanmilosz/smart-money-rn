@@ -37,13 +37,13 @@ const App = () => {
   return (
     <NavigationContainer ref={navigationRef}>
       <Drawer.Navigator
-        initialRouteName="ResolveAuth"
+        initialRouteName="AccountScreen"
         drawerContent={(props) => <Navigation {...props} />}>
-        <Drawer.Screen name="ResolveAuth" component={ResolveAuthScreen} />
-        <Drawer.Screen name="ConnectionProblem" component={ConnectionProblemScreen} />
+        {/*<Drawer.Screen name="ResolveAuth" component={ResolveAuthScreen} />*/}
+        {/*<Drawer.Screen name="ConnectionProblem" component={ConnectionProblemScreen} />*/}
         <Drawer.Screen name="Summary" component={SummaryScreen} />
-        <Drawer.Screen name="Signup" component={SignupScreen} />
-        <Drawer.Screen name="Signin" component={SigninScreen} />
+        {/*<Drawer.Screen name="Signup" component={SignupScreen} />*/}
+        {/*<Drawer.Screen name="Signin" component={SigninScreen} />*/}
         <Drawer.Screen name="Account" component={AccountScreen} />
         <Drawer.Screen name="AddTransaction" component={AddTransactionScreen} />
         <Drawer.Screen name="EditTransaction" component={EditTransactionScreen} />

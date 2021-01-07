@@ -1,4 +1,6 @@
 import AsyncStorage from '@react-native-community/async-storage';
+import FormData from 'form-data';
+import {Platform} from 'react-native';
 import AuthActionTypes from '../constans/AuthActionTypes';
 import apiClient from '../api/apiClient';
 import createContext from './createContext';
@@ -92,12 +94,27 @@ const getUserInfo = (dispatch) => {
 };
 
 const saveUserInfo = (dispatch) => {
-  return async (firstName, lastName, email, oldEmail, avatarUri) => {
+  return async (firstName, lastName, email, oldEmail, userAvatar) => {
+    const filename = userAvatar.path.substring(userAvatar.path.lastIndexOf('/') + 1);
+    const uploadUri =
+      Platform.OS === 'ios' ? userAvatar.path.replace('file://', '') : userAvatar.path;
+    const file = {
+      uri: uploadUri,
+      type: userAvatar.mime,
+      name: filename,
+    };
+    const formData = new FormData();
+    formData.append('file', file);
+    console.log(formData);
     dispatch({type: `${AuthActionTypes.SAVE_USER_INFO}`});
     try {
-      await apiClient.post(`/user-info`, {firstName, lastName, email, oldEmail, avatarUri});
+      const res = await fetch('http://192.168.15.109:8080/photo/avatar', {
+        method: 'POST',
+        body: formData,
+      });
       dispatch({type: `${AuthActionTypes.SAVE_USER_INFO}_SUCCESS`});
     } catch (e) {
+      console.log(e);
       dispatch({type: `${AuthActionTypes.SAVE_USER_INFO}_FAILURE`, payload: errorResponse(e)});
     }
   };
@@ -148,7 +165,7 @@ const tryAutoSignIn = (dispatch) => {
     const token = await AsyncStorage.getItem('token');
     if (token) {
       dispatch({type: AuthActionTypes.SIGNIN_SUCCESS, payload: {token}});
-      return navigate('Summary');
+      return navigate('Account');
     }
     return navigate('Signin');
   };
